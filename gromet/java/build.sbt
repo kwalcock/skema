@@ -12,7 +12,9 @@ libraryDependencies ++= Seq(
   "org.threeten"         % "threetenbp"           % "1.3.5"  % "compile",
   "javax.annotation"     % "javax.annotation-api" % "1.3.2"  % "compile",
   "junit"                % "junit"                % "4.12"   % "test",
-  "com.novocode"         % "junit-interface"      % "0.10"   % "test"
+  "com.novocode"         % "junit-interface"      % "0.10"   % "test",
+  "org.scalatest"       %% "scalatest"            % "3.0.4"  % "test"
+
 )
 
 resolvers += Resolver.mavenLocal
