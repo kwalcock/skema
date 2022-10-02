@@ -15,7 +15,7 @@ libraryDependencies ++= {
 }
 
 lazy val root = (project in file("."))
-  .aggregate(/*common, java, */ scala)
+  .aggregate(/*common, */ java, scala)
   .dependsOn(/*common % "compile -> compile; test -> test"*/)
   .settings(
     publish / skip := true
@@ -23,8 +23,8 @@ lazy val root = (project in file("."))
 
 // lazy val common = project
 
-// lazy val java = project
-//   .dependsOn(common % "compile -> compile; test -> test")
+ lazy val java = project
+   .dependsOn(/*common % "compile -> compile; test -> test"*/)
 
 lazy val scala = project
   .dependsOn(/*common % "compile -> compile; test -> test"*/)
