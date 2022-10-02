@@ -27,4 +27,4 @@ lazy val root = (project in file("."))
 //   .dependsOn(common % "compile -> compile; test -> test")
 
 lazy val scala = project
-  .dependsOn(common % "compile -> compile; test -> test")
+  .dependsOn(/*common % "compile -> compile; test -> test"*/)
