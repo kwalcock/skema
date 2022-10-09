@@ -124,6 +124,57 @@ public class JSON {
                   }
               }
           })
+          .registerTypeSelector(Metadata.class, new TypeSelector<Metadata>() {
+            @Override
+            public Class<? extends Metadata> getClassForElement(JsonElement readElement) {
+                Map<String, Class<? extends Metadata>> classByDiscriminatorValue = new HashMap<>();
+                    classByDiscriminatorValue.put("EquationDefinition".toUpperCase(), EquationDefinition.class);
+                    classByDiscriminatorValue.put("EquationParameter".toUpperCase(), EquationParameter.class);
+                    classByDiscriminatorValue.put("GrometCreation".toUpperCase(), GrometCreation.class);
+                    classByDiscriminatorValue.put("SourceCodeCollection".toUpperCase(), SourceCodeCollection.class);
+                    classByDiscriminatorValue.put("SourceCodeDataType".toUpperCase(), SourceCodeDataType.class);
+                    classByDiscriminatorValue.put("SourceCodeLoopInit".toUpperCase(), SourceCodeLoopInit.class);
+                    classByDiscriminatorValue.put("SourceCodeLoopUpdate".toUpperCase(), SourceCodeLoopUpdate.class);
+                    classByDiscriminatorValue.put("SourceCodeReference".toUpperCase(), SourceCodeReference.class);
+                    classByDiscriminatorValue.put("TextDefinition".toUpperCase(), TextDefinition.class);
+                    classByDiscriminatorValue.put("TextParameter".toUpperCase(), TextParameter.class);
+                    classByDiscriminatorValue.put("TextualDocumentCollection".toUpperCase(), TextualDocumentCollection.class);
+                    classByDiscriminatorValue.put("Metadata".toUpperCase(), Metadata.class);
+                return getClassByDiscriminator(
+                            classByDiscriminatorValue,
+                            getDiscriminatorValue(readElement, ""));
+            }
+          })
+          .registerPostProcessor(Metadata.class, new PostProcessor<Metadata>() {
+              @Override
+              public void postDeserialize(Metadata result, JsonElement src, Gson gson) {
+
+              }
+
+              @Override
+              public void postSerialize(JsonElement result, Metadata src, Gson gson) {
+                  Map<Class<? extends Metadata>, String> discriminatorValueByClass = new HashMap<>();
+                      discriminatorValueByClass.put(EquationDefinition.class, "EquationDefinition");
+                      discriminatorValueByClass.put(EquationParameter.class, "EquationParameter");
+                      discriminatorValueByClass.put(GrometCreation.class, "GrometCreation");
+                      discriminatorValueByClass.put(SourceCodeCollection.class, "SourceCodeCollection");
+                      discriminatorValueByClass.put(SourceCodeDataType.class, "SourceCodeDataType");
+                      discriminatorValueByClass.put(SourceCodeLoopInit.class, "SourceCodeLoopInit");
+                      discriminatorValueByClass.put(SourceCodeLoopUpdate.class, "SourceCodeLoopUpdate");
+                      discriminatorValueByClass.put(SourceCodeReference.class, "SourceCodeReference");
+                      discriminatorValueByClass.put(TextDefinition.class, "TextDefinition");
+                      discriminatorValueByClass.put(TextParameter.class, "TextParameter");
+                      discriminatorValueByClass.put(TextualDocumentCollection.class, "TextualDocumentCollection");
+                      discriminatorValueByClass.put(Metadata.class, "Metadata");
+                  if(result instanceof JsonObject)
+                  {
+                      if(!((JsonObject) result).has(""))
+                      {
+                          ((JsonObject) result).addProperty("", discriminatorValueByClass.get(src.getClass()));
+                      }
+                  }
+              }
+          })
         ;
         return fireBuilder.createGsonBuilder();
     }
