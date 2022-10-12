@@ -1,6 +1,6 @@
 package org.ml4ai.skema.gromet.generator
 
-import io.swagger.codegen.v3.{ClientOptInput, DefaultGenerator, Generator}
+import io.swagger.codegen.v3.{DefaultGenerator, Generator}
 import io.swagger.codegen.v3.config.CodegenConfigurator
 
 import scala.collection.JavaConverters._
@@ -51,12 +51,12 @@ class ScalaGenerator(generator: Generator) extends CodeGenerator(generator) {
 
 object CodeGenerator {
 
-  def newGenerator(lang: String, inputFilename: String, outputDirname: String): Generator = {
+  def newGenerator(lang: String, inputSpec: String, outputDirname: String): Generator = {
     val configurator = {
       val configurator = new CodegenConfigurator()
 
       configurator.setLang(lang)
-      configurator.setInputSpec(inputFilename)
+      configurator.setInputSpec(inputSpec)
       configurator.setOutputDir(outputDirname)
       configurator
     }
@@ -66,12 +66,12 @@ object CodeGenerator {
     generator
   }
 
-  def newJavaGenerator(inputFilename: String, outputDirname: String): CodeGenerator =
-      new JavaGenerator(newGenerator("java", inputFilename, outputDirname))
+  def newJavaGenerator(inputSpec: String, outputDirname: String): CodeGenerator =
+      new JavaGenerator(newGenerator("java", inputSpec, outputDirname))
 
-  def newPythonGenerator(inputFilename: String, outputDirname: String): CodeGenerator =
-      new PythonGenerator(newGenerator("python", inputFilename, outputDirname))
+  def newPythonGenerator(inputSpec: String, outputDirname: String): CodeGenerator =
+      new PythonGenerator(newGenerator("python", inputSpec, outputDirname))
 
-  def newScalaGenerator(inputFilename: String, outputDirname: String): CodeGenerator =
-      new ScalaGenerator(newGenerator("scala", inputFilename, outputDirname))
+  def newScalaGenerator(inputSpec: String, outputDirname: String): CodeGenerator =
+      new ScalaGenerator(newGenerator("scala", inputSpec, outputDirname))
 }
