@@ -1,21 +1,25 @@
 package org.ml4ai.skema.gromet.generator
 
-import io.swagger.codegen.v3.generators.java.JavaClientCodegen
-import io.swagger.codegen.v3.generators.python.PythonClientCodegen
-import io.swagger.codegen.v3.generators.scala.ScalaClientCodegen
+import scala.io.{Codec, Source}
 
 object CodeGeneratorApp extends App {
   val version = "0.1.4"
-  val fnFilename = s"../gromet_FN_v$version.yaml"
-  val metadataFilename = s"../gromet_metadata_v$version.yaml"
+  val fnFilename = s"./gromet_FN_v$version.yaml"
+  val metadataFilename = s"./gromet_metadata_v$version.yaml"
+  val outputDirname = "../../exampleoutput/"
   // combine the files above into a single file
+  // maybe move it to temp
 
-  val generators = Seq() // Make classes for each, each having own directories
-  val javaGenerator = new JavaClientCodegen()
-  val pythonGenerator = new PythonClientCodegen()
-  val scalaGenerator = new ScalaClientCodegen()
+  val source = Source.fromFile(fnFilename)(Codec.UTF8)
+  val text = source.mkString
+  source.close()
 
-//  cliOptions.add(new CliOption(CodegenConstants.MODEL_PACKAGE, CodegenConstants.MODEL_PACKAGE_DESC));
-//  cliOptions.add(new CliOption(CodegenConstants.API_PACKAGE, CodegenConstants.API_PACKAGE_DESC));
-//  cliOptions.add(new CliOption(CodegenConstants.SOURCE_FOLDER, CodegenConstants.SOURCE_FOLDER_DESC));
+  //  inputFilename: String, outputDirname: String
+  val codeGenerators = Seq(
+    CodeGenerator.newJavaGenerator(text, outputDirname + "java") //,
+//    CodeGenerator.newPythonGenerator(fnFilename, outputDirname + "python"),
+//    CodeGenerator.newScalaGenerator(fnFilename, outputDirname + "scala")
+  )
+
+  codeGenerators.foreach(_.generate)
 }
