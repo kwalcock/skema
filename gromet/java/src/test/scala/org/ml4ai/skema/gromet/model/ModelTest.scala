@@ -2,7 +2,7 @@ package org.ml4ai.skema.gromet.model
 
 import io.swagger.client.JSON
 import io.swagger.client.model.GrometFNModule
-import org.ml4ai.skema.utils.Test
+import org.ml4ai.skema.gromet.test.Test
 
 import java.nio.charset.StandardCharsets
 import scala.io.{Codec, Source}
@@ -14,6 +14,7 @@ class ModelTest extends Test {
   behavior of "model"
 
   def run(name: String): Unit = {
+    if (name == "cond1")
     it should s"deserialize $name" in {
       val resourceName =  s"examples/$name/FN_0.1.4/$name--Gromet-FN-auto.json"
       val source = Source.fromResource(resourceName)(codec)

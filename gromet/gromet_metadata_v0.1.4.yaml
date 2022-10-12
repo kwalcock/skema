@@ -59,7 +59,11 @@ components:
     Metadata:
       description: |
         Root type of Metadata.
+      discriminator:
+        propertyName: metadata_type
       properties:
+        metadata_type:
+          type: string
 #        gromet_src_id:
 #          description: |
 #            The identifier of the Gromet object within the GrometFNModule

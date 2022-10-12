@@ -1,6 +1,5 @@
-
 name := "gromet"
-
+version := "1.0.0"
 
 val scala11 = "2.11.12" // up to 2.11.12
 val scala12 = "2.12.16" // up to 2.12.16
@@ -15,16 +14,19 @@ libraryDependencies ++= {
 }
 
 lazy val root = (project in file("."))
-  .aggregate(/*common, */ java, scala)
+  .aggregate(common, generator, java, scala)
   .dependsOn(/*common % "compile -> compile; test -> test"*/)
   .settings(
     publish / skip := true
   )
 
-// lazy val common = project
+lazy val common = project
 
- lazy val java = project
-   .dependsOn(/*common % "compile -> compile; test -> test"*/)
+lazy val generator = project
+  .dependsOn(common % "compile -> compile; test -> test")
+
+lazy val java = project
+ .dependsOn(common % "compile -> compile; test -> test")
 
 lazy val scala = project
-  .dependsOn(/*common % "compile -> compile; test -> test"*/)
+ .dependsOn(common % "compile -> compile; test -> test")

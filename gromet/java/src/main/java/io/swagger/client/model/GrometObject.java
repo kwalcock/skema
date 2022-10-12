@@ -25,11 +25,18 @@ import java.io.IOException;
  * Generic base class for any GroMEt object
  */
 @Schema(description = "Generic base class for any GroMEt object")
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-02T01:18:52.196-07:00[America/Phoenix]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.JavaClientCodegen", date = "2022-10-09T15:16:12.519-07:00[America/Phoenix]")
+
 public class GrometObject {
   @SerializedName("metadata")
   private Integer metadata = null;
 
+  @SerializedName("gromet_object_type")
+  private String grometObjectType = null;
+
+  public GrometObject() {
+    this.grometObjectType = this.getClass().getSimpleName();
+  }
   public GrometObject metadata(Integer metadata) {
     this.metadata = metadata;
     return this;
@@ -48,6 +55,24 @@ public class GrometObject {
     this.metadata = metadata;
   }
 
+  public GrometObject grometObjectType(String grometObjectType) {
+    this.grometObjectType = grometObjectType;
+    return this;
+  }
+
+   /**
+   * Get grometObjectType
+   * @return grometObjectType
+  **/
+  @Schema(description = "")
+  public String getGrometObjectType() {
+    return grometObjectType;
+  }
+
+  public void setGrometObjectType(String grometObjectType) {
+    this.grometObjectType = grometObjectType;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -58,12 +83,13 @@ public class GrometObject {
       return false;
     }
     GrometObject grometObject = (GrometObject) o;
-    return Objects.equals(this.metadata, grometObject.metadata);
+    return Objects.equals(this.metadata, grometObject.metadata) &&
+        Objects.equals(this.grometObjectType, grometObject.grometObjectType);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(metadata);
+    return Objects.hash(metadata, grometObjectType);
   }
 
 
@@ -73,6 +99,7 @@ public class GrometObject {
     sb.append("class GrometObject {\n");
     
     sb.append("    metadata: ").append(toIndentedString(metadata)).append("\n");
+    sb.append("    grometObjectType: ").append(toIndentedString(grometObjectType)).append("\n");
     sb.append("}");
     return sb.toString();
   }

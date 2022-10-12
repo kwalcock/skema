@@ -62,7 +62,7 @@ public class JSON {
                     classByDiscriminatorValue.put("GrometObject".toUpperCase(), GrometObject.class);
                 return getClassByDiscriminator(
                             classByDiscriminatorValue,
-                            getDiscriminatorValue(readElement, ""));
+                            getDiscriminatorValue(readElement, "gromet_object_type"));
             }
           })
           .registerPostProcessor(GrometObject.class, new PostProcessor<GrometObject>() {
@@ -82,9 +82,9 @@ public class JSON {
                       discriminatorValueByClass.put(GrometObject.class, "GrometObject");
                   if(result instanceof JsonObject)
                   {
-                      if(!((JsonObject) result).has(""))
+                      if(!((JsonObject) result).has("gromet_object_type"))
                       {
-                          ((JsonObject) result).addProperty("", discriminatorValueByClass.get(src.getClass()));
+                          ((JsonObject) result).addProperty("gromet_object_type", discriminatorValueByClass.get(src.getClass()));
                       }
                   }
               }

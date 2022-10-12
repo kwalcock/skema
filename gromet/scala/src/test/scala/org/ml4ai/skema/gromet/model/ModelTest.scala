@@ -2,7 +2,7 @@ package org.ml4ai.skema.gromet.model
 
 import io.swagger.client.ApiInvoker
 import io.swagger.client.model.GrometFNModule
-import org.ml4ai.skema.utils.Test
+import org.ml4ai.skema.gromet.test.Test
 
 import java.nio.charset.StandardCharsets
 import scala.io.{Codec, Source}
