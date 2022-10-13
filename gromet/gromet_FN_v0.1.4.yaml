@@ -62,7 +62,11 @@ components:
     GrometObject:
       description: Generic base class for any GroMEt object
       type: object
+      discriminator:
+        propertyName: gromet_object_type
       properties:
+        gromet_object_type:
+          type: string      
 #        id:
 #          description: An integer representing an identifier that is unique within the GrometFNModule.
 #          type: integer
