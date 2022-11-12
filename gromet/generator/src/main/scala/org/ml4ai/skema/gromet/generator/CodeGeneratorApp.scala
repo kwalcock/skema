@@ -51,10 +51,11 @@ object CodeGeneratorApp extends App {
     val combinedSchema = {
       val combinedSchema = new JLinkedHashMap[String, Object](fnSchemas)
 
-      metadataSchemas.forEach { (key, value) =>
-        // Metadata and LiteralValue of metadataSchemas will overwrite that of fnSchemas.
-        combinedSchema.put(key, value)
-      }
+      // These lines don't work for Scala 2.11.
+//      metadataSchemas.forEach { (key, value) =>
+//         Metadata and LiteralValue of metadataSchemas will overwrite that of fnSchemas.
+//        combinedSchema.put(key, value)
+//      }
       combinedSchema
     }
     val combinedYaml = {
