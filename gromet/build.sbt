@@ -6,7 +6,7 @@ val scala12 = "2.12.16" // up to 2.12.16
 val scala13 = "2.13.8"  // up to 2.13.8
 
 ThisBuild / crossScalaVersions := Seq(scala12, scala11, scala13)
-ThisBuild / scalaVersion := scala12
+ThisBuild / scalaVersion := scala11
 
 libraryDependencies ++= {
   Seq(
@@ -14,7 +14,7 @@ libraryDependencies ++= {
 }
 
 lazy val root = (project in file("."))
-  .aggregate(common, generator, java, scala)
+  .aggregate(common, generator, /*java,*/ scala)
   .dependsOn(/*common % "compile -> compile; test -> test"*/)
   .settings(
     publish / skip := true
@@ -25,8 +25,8 @@ lazy val common = project
 lazy val generator = project
   .dependsOn(common % "compile -> compile; test -> test")
 
-lazy val java = project
- .dependsOn(common % "compile -> compile; test -> test")
+//lazy val java = project
+// .dependsOn(common % "compile -> compile; test -> test")
 
 lazy val scala = project
  .dependsOn(common % "compile -> compile; test -> test")
