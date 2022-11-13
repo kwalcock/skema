@@ -91,15 +91,15 @@ object CodeGeneratorApp extends App {
   val codeGenerators =
     if (useOpen)
       Seq(
-//        OpenApiCodeGenerator.newJavaGenerator(inputSpec, outputDirname + "java") //,
+        OpenApiCodeGenerator.newJavaGenerator(inputSpec, outputDirname + "java") //,
     //    OpenApiCodeGenerator.newPythonGenerator(inputSpec, outputDirname + "python"),
-        OpenApiCodeGenerator.newScalaGenerator(inputSpec, outputDirname + "scala")
+//        OpenApiCodeGenerator.newScalaGenerator(inputSpec, outputDirname + "scala")
       )
     else
       Seq(
-//        SwagCodeGenerator.newJavaGenerator(inputSpec, outputDirname + "java") //,
+        SwagCodeGenerator.newJavaGenerator(inputSpec, outputDirname + "java") //,
         //    SwagCodeGenerator.newPythonGenerator(inputSpec, outputDirname + "python"),
-            SwagCodeGenerator.newScalaGenerator(inputSpec, outputDirname + "scala")
+//            SwagCodeGenerator.newScalaGenerator(inputSpec, outputDirname + "scala")
       )
 
   codeGenerators.foreach(_.generate)
