@@ -1,8 +1,8 @@
 package org.ml4ai.skema.gromet.model
 
 import io.swagger.client.ApiInvoker
-import io.swagger.client.model.GrometFNModule
 import org.ml4ai.skema.gromet.common.utils.FileUtils
+import org.ml4ai.skema.gromet.model.swagger.scala.GrometFNModule
 import org.ml4ai.skema.gromet.test.Test
 
 class ModelTest extends Test {
@@ -13,9 +13,11 @@ class ModelTest extends Test {
     it should s"deserialize $name" in {
       val resourceName =  s"/examples/$name/FN_0.1.4/$name--Gromet-FN-auto.json"
       val text = FileUtils.textFromResource(resourceName)
-      val result = ApiInvoker.deserialize(text, "", classOf[GrometFNModule])
+      val result = ApiInvoker.deserialize(text, "", classOf[GrometFNModule]).asInstanceOf[GrometFNModule]
+      val nothing = ApiInvoker.serialize(result)
 
       println(result)
+      println(nothing)
     }
   }
 

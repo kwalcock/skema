@@ -1,11 +1,11 @@
 package org.ml4ai.skema.gromet.generator
 
-import io.swagger.codegen.v3.DefaultGenerator
-import io.swagger.codegen.v3.Generator
+import io.swagger.codegen.v3.{CodegenArgument, DefaultGenerator, Generator}
 import io.swagger.codegen.v3.config.CodegenConfigurator
 
 import scala.collection.JavaConverters._
 import java.io.File
+import scala.collection.mutable
 
 abstract class SwaggerCodeGenerator(val generator: Generator) extends CodeGenerator {
 
@@ -55,10 +55,16 @@ object SwagCodeGenerator extends TripleCodeGenerator {
   def newGenerator(lang: String, inputSpec: String, outputDirname: String): Generator = {
     val configurator = {
       val configurator = new CodegenConfigurator()
+      val additionalProperties = mutable.Map[String, AnyRef](
+//        "modelPropertyNaming" -> "original"
+      ).asJava
 
       configurator.setLang(lang)
       configurator.setInputSpec(inputSpec)
       configurator.setOutputDir(outputDirname)
+      configurator.setModelPackage(s"org.ml4ai.skema.gromet.model.swagger.$lang")
+      configurator.setAdditionalProperties(additionalProperties)
+      configurator.setVerbose(true)
       configurator
     }
     val clientOptInput = configurator.toClientOptInput
