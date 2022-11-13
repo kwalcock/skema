@@ -11,48 +11,17 @@ class ModelTest extends Test {
 
   behavior of "model"
 
-  def toOther(jObject: JObject, converter: String => String): JObject = {
+  def sortObject(jObject: JObject): JObject = {
+    val sorted = new JObject(jObject.obj.sortBy { case (key, _) => key })
+    val transformed = sorted.transform { case jArray: JArray => sortArray(jArray) }
 
-    def innerObject(jObject: JObject): JObject = {
-      val newMap = jObject.values.map { case (key: String, value: JValue) =>
-        val newKey = converter(key)
-        val newValue: JValue = value match {
-          case value: JObject => innerObject(value)
-          case value: JArray => innerArray(value)
-          case value: JValue => value
-        }
-
-        newKey -> newValue
-      }
-
-      new JObject(newMap.toList)
-    }
-
-    def innerArray(jArray: JArray): JArray = {
-      val newArray = jArray.arr.map { case value =>
-        val newValue: JValue = value match {
-          case value: JObject => innerObject(value)
-          case value: JArray => innerArray(value)
-          case value: JValue => value
-        }
-
-        newValue
-      }
-
-      new JArray(newArray.toList)
-    }
-
-    innerObject(jObject)
+    transformed.asInstanceOf[JObject]
   }
 
-  def toScala(jObject: JObject): JObject = {
-    jObject.camelizeKeys.asInstanceOf[JObject]
-//    toOther(jObject, (string: String) => string.toUpperCase)
-  }
+  def sortArray(jArray: JArray): JArray = {
+    val transformed = jArray.transform { case jObject: JObject => sortObject(jObject) }
 
-  def toPython(jObject: JObject): JObject = {
-    jObject.snakizeKeys.asInstanceOf[JObject]
-    // toOther(jObject, (string: String) => string.toLowerCase)
+    transformed.asInstanceOf[JArray]
   }
 
   def run(name: String): Unit = {
@@ -62,20 +31,21 @@ class ModelTest extends Test {
       val resourceName =  s"/examples/$name/FN_0.1.4/$name--Gromet-FN-auto.json"
       val (serializedPython, serializedScala) = {
         val uglyPython = FileUtils.textFromResource(resourceName)
-        val jObject = JsonMethods.parse(uglyPython).asInstanceOf[JObject]
-        val prettyPython = Serialization.writePretty(jObject)
-        val prettyScala = Serialization.writePretty(toScala(jObject))
+        val parsed = JsonMethods.parse(uglyPython).asInstanceOf[JObject]
+        val sorted = sortObject(parsed)
+        val prettyPython = Serialization.writePretty(sorted)
+        val prettyScala = Serialization.writePretty(sorted.camelizeKeys)
 
         (prettyPython, prettyScala)
       }
 
-      // Read in the json, change keys, format
       val deserialized = ApiInvoker.deserialize(serializedScala, "", classOf[GrometFNModule]).asInstanceOf[GrometFNModule]
       val (reserializedPython, reserializedScala) = {
         val uglyScala = ApiInvoker.serialize(deserialized)
-        val jObject = JsonMethods.parse(uglyScala).asInstanceOf[JObject]
-        val prettyScala = Serialization.writePretty(jObject)
-        val prettyPython = Serialization.writePretty(toPython(jObject))
+        val parsed = JsonMethods.parse(uglyScala).asInstanceOf[JObject]
+        val sorted = sortObject(parsed)
+        val prettyScala = Serialization.writePretty(sorted)
+        val prettyPython = Serialization.writePretty(sorted.snakizeKeys)
 
         (prettyPython, prettyScala)
       }
