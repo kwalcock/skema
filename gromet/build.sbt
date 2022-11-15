@@ -6,7 +6,7 @@ val scala12 = "2.12.16" // up to 2.12.16
 val scala13 = "2.13.8"  // up to 2.13.8
 
 ThisBuild / crossScalaVersions := Seq(scala12, scala11, scala13)
-ThisBuild / scalaVersion := scala11
+ThisBuild / scalaVersion := scala12
 
 libraryDependencies ++= {
   Seq(
@@ -14,7 +14,7 @@ libraryDependencies ++= {
 }
 
 lazy val root = (project in file("."))
-  .aggregate(common, generator, /*java,*/ scala)
+  .aggregate(common, generator, /*java,*/ openapi_scala_akka_client)
   .dependsOn(/*common % "compile -> compile; test -> test"*/)
   .settings(
     publish / skip := true
@@ -23,10 +23,13 @@ lazy val root = (project in file("."))
 lazy val common = project
 
 lazy val generator = project
-  .dependsOn(common % "compile -> compile; test -> test")
+    .dependsOn(common % "compile -> compile; test -> test")
 
-//lazy val java = project
+lazy val openapi_scala_akka_client = (project in file("openapi-scala-akka-client"))
+    .dependsOn(common % "compile -> compile; test -> test")
+
+//lazy val swagger_java_client = (project in file("swagger-java-client"))
 // .dependsOn(common % "compile -> compile; test -> test")
 
-lazy val scala = project
- .dependsOn(common % "compile -> compile; test -> test")
+//lazy val swagger_scala_client = (project in file("swagger-scala-client"))
+//   .dependsOn(common % "compile -> compile; test -> test")

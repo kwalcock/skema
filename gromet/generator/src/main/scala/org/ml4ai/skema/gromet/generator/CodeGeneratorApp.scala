@@ -7,6 +7,7 @@ import java.io.StringWriter
 import java.util.{LinkedHashMap => JLinkedHashMap }
 import java.util.{Map => JMap}
 import scala.io.{Codec, Source}
+import scala.collection.JavaConverters._
 
 object CodeGeneratorApp extends App {
   val useOpen = false
@@ -42,6 +43,7 @@ object CodeGeneratorApp extends App {
     val license = info.get("license").asInstanceOf[JMap[String, Object]]
     val version = info.get("version").asInstanceOf[String]
     // TODO Make sure openapi, contact, version are the same.  So make them into classes
+    // Issue a warning if they differ
     val fnSchemas = fnYaml
         .get("components").asInstanceOf[JMap[String, Object]]
         .get("schemas").asInstanceOf[JMap[String, Object]]
@@ -51,11 +53,11 @@ object CodeGeneratorApp extends App {
     val combinedSchema = {
       val combinedSchema = new JLinkedHashMap[String, Object](fnSchemas)
 
-      // These lines don't work for Scala 2.11.
-//      metadataSchemas.forEach { (key, value) =>
-//         Metadata and LiteralValue of metadataSchemas will overwrite that of fnSchemas.
-//        combinedSchema.put(key, value)
-//      }
+      metadataSchemas.asScala.foreach { case (key, value) =>
+        // Metadata and LiteralValue of metadataSchemas will overwrite that of fnSchemas.
+        // TODO: Check that only these keys overlap.
+        combinedSchema.put(key, value)
+      }
       combinedSchema
     }
     val combinedYaml = {
@@ -87,19 +89,20 @@ object CodeGeneratorApp extends App {
     inputSpec
   }
 
-  val inputSpec = mkInputSpec(fnFilename) // mkInputSpec(fnFilename, metadataFilename)
+//  val inputSpec = mkInputSpec(fnFilename)
+  val inputSpec = mkInputSpec(fnFilename, metadataFilename)
   val codeGenerators =
     if (useOpen)
       Seq(
-        OpenApiCodeGenerator.newJavaGenerator(inputSpec, outputDirname + "java") //,
+//        OpenApiCodeGenerator.newJavaGenerator(inputSpec, outputDirname + "java") //,
     //    OpenApiCodeGenerator.newPythonGenerator(inputSpec, outputDirname + "python"),
-//        OpenApiCodeGenerator.newScalaGenerator(inputSpec, outputDirname + "scala")
+        OpenApiCodeGenerator.newScalaGenerator(inputSpec, outputDirname + "scala")
       )
     else
       Seq(
-        SwagCodeGenerator.newJavaGenerator(inputSpec, outputDirname + "java") //,
+//        SwagCodeGenerator.newJavaGenerator(inputSpec, outputDirname + "java") //,
         //    SwagCodeGenerator.newPythonGenerator(inputSpec, outputDirname + "python"),
-//            SwagCodeGenerator.newScalaGenerator(inputSpec, outputDirname + "scala")
+            SwagCodeGenerator.newScalaGenerator(inputSpec, outputDirname + "scala")
       )
 
   codeGenerators.foreach(_.generate)
