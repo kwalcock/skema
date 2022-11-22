@@ -52,12 +52,15 @@ class ScalaOpenApiGenerator(generator: Generator) extends OpenApiCodeGenerator(g
 object OpenApiCodeGenerator extends TripleCodeGenerator {
 
   def newGenerator(lang: String, inputSpec: String, outputDirname: String): Generator = {
+    val namespace = lang.replace('-', '_')
     val configurator = {
       val configurator = new CodegenConfigurator()
           .setGeneratorName(lang)
           .setInputSpec(inputSpec)
-          .setModelNamePrefix("io.swagger")
+//          .setModelNamePrefix(s"org.ml4ai.skema.gromet.model.openai.$namespace")
           .setOutputDir(outputDirname)
+          .setVerbose(true)
+          .setValidateSpec(false) // TODO: Check these error message. GrometFNModule.default
 
       configurator
     }
@@ -67,12 +70,12 @@ object OpenApiCodeGenerator extends TripleCodeGenerator {
     generator
   }
 
-  def newJavaGenerator(inputSpec: String, outputDirname: String): OpenApiCodeGenerator =
-      new JavaOpenApiGenerator(newGenerator("java", inputSpec, outputDirname))
+  def newJavaGenerator(inputFilename: String, outputDirname: String): OpenApiCodeGenerator =
+      new JavaOpenApiGenerator(newGenerator("java", inputFilename, outputDirname))
 
-  def newPythonGenerator(inputSpec: String, outputDirname: String): OpenApiCodeGenerator =
-      new PythonOpenApiGenerator(newGenerator("python", inputSpec, outputDirname))
+  def newPythonGenerator(inputFilename: String, outputDirname: String): OpenApiCodeGenerator =
+      new PythonOpenApiGenerator(newGenerator("python", inputFilename, outputDirname))
 
-  def newScalaGenerator(inputSpec: String, outputDirname: String): OpenApiCodeGenerator =
-      new ScalaOpenApiGenerator(newGenerator("scala", inputSpec, outputDirname))
+  def newScalaGenerator(inputFilename: String, outputDirname: String): OpenApiCodeGenerator =
+      new ScalaOpenApiGenerator(newGenerator("scala-play-server", inputFilename, outputDirname + "-play-server"))
 }
