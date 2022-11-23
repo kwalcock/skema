@@ -7,8 +7,6 @@ import org.ml4ai.skema.gromet.common.utils.FileUtils
 import org.ml4ai.skema.gromet.model.scala.GrometFN
 import org.ml4ai.skema.gromet.test.Test
 
-import play.api.libs.json.{Json => PlayJson}
-
 class ModelTest extends Test {
 
   behavior of "org/ml4ai/skema/gromet/model"
@@ -54,10 +52,9 @@ class ModelTest extends Test {
 
         (prettyPython, prettyScala)
       }
-      val result = PlayJson.fromJson[GrometFN](PlayJson.parse(serializedScala))
-      val deserialized = result.get
+      val deserialized = GrometFN.fromJson(JsonMethods.parse(serializedScala))
       val (reserializedPython, reserializedScala) = {
-        val uglyScala = PlayJson.prettyPrint(PlayJson.toJson(deserialized))
+        val uglyScala = Serialization.writePretty(deserialized.toJson)
         val parsed = JsonMethods.parse(uglyScala).asInstanceOf[JObject]
         val sorted = sortObject(parsed)
         val prettyScala = Serialization.writePretty(sorted)

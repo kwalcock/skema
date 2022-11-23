@@ -17,7 +17,7 @@ case class SourceCodeCollection(
     (METADATA_TYPE -> metadataTypeOpt) ~
     (NAME -> nameOpt) ~
     (GLOBAL_REFERENCE_ID -> globalReferenceIdOpt) ~
-    (FILES -> filesOpt) // This is a list
+    (FILES -> filesOpt.map(value => JArray(value.map(_.toJson))))
   }
 }
 
@@ -32,8 +32,8 @@ object SourceCodeCollection extends ModelBuilder {
     val provenanceOpt = (jValue \ PROVENANCE).extractOpt[JValue].map(Provenance.fromJson)
     val metadataTypeOpt = (jValue \ METADATA_TYPE).extractOpt[String]
     val nameOpt = (jValue \ NAME).extractOpt[String]
-    val globalReferenceIdOpt = (jValue \ GLOBAL_REFERENCE_ID).extractOpt[Int]
-    val filesOpt = (jValue \ FILES).extractOpt[JArray].map(CodeFileReference.fromJson)
+    val globalReferenceIdOpt = (jValue \ GLOBAL_REFERENCE_ID).extractOpt[String]
+    val filesOpt = (jValue \ FILES).extractOpt[JArray].map(_.arr.map(CodeFileReference.fromJson))
 
     SourceCodeCollection(
       provenanceOpt,

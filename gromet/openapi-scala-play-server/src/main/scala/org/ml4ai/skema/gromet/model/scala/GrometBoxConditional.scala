@@ -23,7 +23,7 @@ case class GrometBoxConditional(
     (NAME -> nameOpt) ~
     (CONDITION -> conditionOpt) ~
     (BODY_IF -> bodyIfOpt) ~
-    (BODY_ELSE -> bodyElseOpt) ~
+    (BODY_ELSE -> bodyElseOpt)
   }
 }
 

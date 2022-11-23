@@ -13,7 +13,9 @@ case class TextualDocumentCollection(
   def toJson: JValue = {
     (PROVENANCE -> provenanceOpt.map(_.toJson)) ~
     (METADATA_TYPE -> metadataTypeOpt) ~
-    (DOCUMENTS -> documentsOpt) // TODO
+    (DOCUMENTS -> documentsOpt.map { documents =>
+      JArray(documents.map(_.toJson))
+    })
   }
 }
 
@@ -23,12 +25,13 @@ object TextualDocumentCollection extends ModelBuilder {
   val DOCUMENTS = "documents"
 
   def fromJson(jValue: JValue): TextualDocumentCollection = {
-    val provenanceOpt = (jValue \ PROVENANCE).extractOpt[JValue].map(Provenance.toJson)
+    val provenanceOpt = (jValue \ PROVENANCE).extractOpt[JValue].map(Provenance.fromJson)
     val metadataTypeOpt = (jValue \ METADATA_TYPE).extractOpt[String]
-    val documentsOpt = (jValue \ DOCUMENTS).extractOpt[JArray].asInstanceOf[Tex]
-
+    val documentsOpt = (jValue \ DOCUMENTS).extractOpt[JArray].map { jArray =>
+      jArray.arr.map(TextualDocumentReference.fromJson)
+    }
     TextualDocumentCollection(
-      provenanceOpt
+      provenanceOpt,
       metadataTypeOpt,
       documentsOpt
     )

@@ -17,7 +17,7 @@ case class SourceCodeDataType(
     (METADATA_TYPE -> metadataTypeOpt) ~
     (SOURCE_LANGUAGE -> sourceLanguageOpt) ~
     (SOURCE_LANGUAGE_VERSION -> sourceLanguageVersionOpt) ~
-    (DATA_TYPE -> dataTypeOpt) ~
+    (DATA_TYPE -> dataTypeOpt)
   }
 }
 

@@ -1,8 +1,6 @@
 package org.ml4ai.skema.gromet.model.scala
 
-// TODO: This is the complex one
-
-import org.json4s.JValue
+import org.json4s.{JArray, JValue}
 import org.json4s.JsonDSL._
 
 case class GrometFNModule(
@@ -22,8 +20,14 @@ case class GrometFNModule(
     (SCHEMA_VERSION -> schemaVersionOpt) ~
     (NAME -> nameOpt) ~
     (FN -> fnOpt.map(_.toJson)) ~
-    (ATTRIBUTES -> "TODO") ~
-    (METADATA_COLLECTION -> "TODO")
+    (ATTRIBUTES -> attributesOpt.map { attributes =>
+      JArray(attributes.map(_.toJson))
+    }) ~
+    (METADATA_COLLECTION -> metadataCollectionOpt.map { metadataCollection =>
+      JArray(metadataCollection.map { metadata =>
+        JArray(metadata.map(_.toJson))
+      })
+    })
   }
 }
 
@@ -42,18 +46,25 @@ object GrometFNModule extends ModelBuilder {
     val schemaVersionOpt = (jValue \ SCHEMA_VERSION).extractOpt[String]
     val nameOpt = (jValue \ NAME).extractOpt[String]
     val fnOpt = (jValue \ FN).extractOpt[JValue].map(GrometFN.fromJson)
-    // TODO: These are arrays.  How many arrays?
-    val attributesOpt = (jValue \ ATTRIBUTES).extractOpt[JValue].map()
-    val metadataCollectionOpt = (jValue \ METADATA_COLLECTION).extractOpt[JValue].map()
-  }
+    val attributesOpt = (jValue \ ATTRIBUTES).extractOpt[JArray].map { jArray =>
+      jArray.arr.map { jValue => TypedValue.fromJson(jValue) }
+    }
+    val metadataCollectionOpt = (jValue \ METADATA_COLLECTION).extractOpt[JArray].map { jArray =>
+      jArray.arr.map { jValue =>
+        jValue.extract[JArray].arr.map { jValue =>
+          Metadata.fromJson(jValue)
+        }
+      }
+    }
 
-  GrometFNModule(
-    metadataOpt,
-    schemaOpt,
-    schemaVersionOpt,
-    nameOpt,
-    fnOpt,
-    attributesOpt,
-    metadataCollectionOpt
-  )
+    GrometFNModule(
+      metadataOpt,
+      schemaOpt,
+      schemaVersionOpt,
+      nameOpt,
+      fnOpt,
+      attributesOpt,
+      metadataCollectionOpt
+    )
+  }
 }

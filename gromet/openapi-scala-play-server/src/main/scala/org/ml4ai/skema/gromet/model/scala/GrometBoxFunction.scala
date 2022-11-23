@@ -4,8 +4,8 @@ import org.json4s.JValue
 import org.json4s.JsonDSL._
 
 case class GrometBoxFunction(
-  nameOpt: Option[String] = None, // GrometObject
-  metadataOpt: Option[Int] = None, // GrometBox
+  metadataOpt: Option[Int] = None, // GrometObject
+  nameOpt: Option[String] = None, // GrometBox
   functionTypeOpt: Option[FunctionType] = None,
   contentsOpt: Option[Int] = None,
   valueOpt: Option[LiteralValue] = None,
@@ -17,7 +17,7 @@ case class GrometBoxFunction(
     (NAME -> nameOpt) ~
     (FUNCTION_TYPE -> functionTypeOpt.map(_.toJson)) ~
     (CONTENTS -> contentsOpt) ~
-    (VALUE -> valueOpt.map(_.toJson)) ~
+    (VALUE -> valueOpt.map(_.toJson))
   }
 }
 

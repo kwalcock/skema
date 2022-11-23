@@ -19,7 +19,7 @@ case class EquationParameter(
   def value: LiteralValue = valueOpt.get
 
   def toJson: JValue = {
-    (PROVENANCE -> provenanceOpt.map(_.toJson)),
+    (PROVENANCE -> provenanceOpt.map(_.toJson)) ~
     (METADATA_TYPE -> metadataTypeOpt) ~
     (EQUATION_EXTRACTION -> equationExtractionOpt.map(_.toJson)) ~
     (VARIABLE_IDENTIFIER -> variableIdentifierOpt) ~

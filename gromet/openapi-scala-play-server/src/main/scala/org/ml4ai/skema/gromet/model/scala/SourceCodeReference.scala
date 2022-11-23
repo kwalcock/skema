@@ -1,6 +1,6 @@
 package org.ml4ai.skema.gromet.model.scala
 
-import org.json4s.JValue
+import org.json4s.{JString, JValue}
 import org.json4s.JsonDSL._
 
 import java.util.UUID
@@ -16,12 +16,10 @@ case class SourceCodeReference(
 ) extends Model {
   import SourceCodeReference._
 
-  // TODO UID
-
   def toJson: JValue = {
     (PROVENANCE -> provenanceOpt.map(_.toJson)) ~
     (METADATA_TYPE -> metadataTypeOpt) ~
-    (CODE_FILE_REFERENCE_UID -> codeFileReferenceUidOpt.map(_.toString)) ~
+    (CODE_FILE_REFERENCE_UID -> codeFileReferenceUidOpt.map(toJson)) ~
     (LINE_BEGIN -> lineBeginOpt) ~
     (LINE_END -> lineEndOpt) ~
     (COL_BEGIN -> colBeginOpt) ~
@@ -41,7 +39,7 @@ object SourceCodeReference extends ModelBuilder {
   def fromJson(jValue: JValue): SourceCodeReference = {
     val provenanceOpt = (jValue \ PROVENANCE).extractOpt[JValue].map(Provenance.fromJson)
     val metadataTypeOpt = (jValue \ METADATA_TYPE).extractOpt[String]
-    val codeFileReferenceUidOpt = (jValue \ CODE_FILE_REFERENCE_UID).extractOpt[String].asInstanceOf[Option[UUID]]
+    val codeFileReferenceUidOpt = (jValue \ CODE_FILE_REFERENCE_UID).extractOpt[JString].map(uuidFromJson)
     val lineBeginOpt = (jValue \ LINE_BEGIN).extractOpt[Int]
     val lineEndOpt = (jValue \ LINE_END).extractOpt[Int]
     val colBeginOpt = (jValue \ COL_BEGIN).extractOpt[Int]

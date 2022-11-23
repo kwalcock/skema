@@ -17,7 +17,7 @@ case class TextParameter(
     (METADATA_TYPE -> metadataTypeOpt) ~
     (TEXT_EXTRACTION -> textExtractionOpt.map(_.toJson)) ~
     (VARIABLE_IDENTIFIER -> variableIdentifierOpt) ~
-    (VALUE -> valueOpt.map(_.toJson)) ~
+    (VALUE -> valueOpt.map(_.toJson))
   }
 }
 

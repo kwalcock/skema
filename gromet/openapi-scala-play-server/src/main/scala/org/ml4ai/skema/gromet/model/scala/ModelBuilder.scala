@@ -1,8 +1,8 @@
 package org.ml4ai.skema.gromet.model.scala
 
-import org.json4s.{DefaultFormats, Formats, JValue}
+import org.json4s.{DefaultFormats, Formats, JString, JValue}
 
-import java.util.Date
+import java.util.{Date, UUID}
 
 abstract class ModelBuilder {
   import ModelBuilder._
@@ -10,7 +10,10 @@ abstract class ModelBuilder {
 
   def fromJson(jValue: JValue): Model
 
-  def dateFromJson(json: JValue): Date = null // TODO
+  // TODO
+  def dateFromJson(jString: JString): Date = new Date()
+
+  def uuidFromJson(jString: JString): UUID = ???
 }
 
 object ModelBuilder {

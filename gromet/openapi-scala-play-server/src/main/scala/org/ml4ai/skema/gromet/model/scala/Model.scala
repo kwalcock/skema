@@ -2,12 +2,14 @@ package org.ml4ai.skema.gromet.model.scala
 
 import org.json4s.{JField, JNull, JString, JValue}
 
-import java.util.Date
+import java.util.{Date, UUID}
 
 abstract class Model {
   def toJson: JValue
 
-  def toJson(date: Date): JString = new JString("hello")
+  def toJson(date: Date): JString = JString("hello")
+
+  def toJson(uuid: UUID): JString = JString("uuid")
 
 //  def toJson(metadataTypeOpt: Option[String]): JField = {
 //    new JField(ModelBuilder.METADATA_TYPE, metadataTypeOpt.map(JString).getOrElse(JNull))
