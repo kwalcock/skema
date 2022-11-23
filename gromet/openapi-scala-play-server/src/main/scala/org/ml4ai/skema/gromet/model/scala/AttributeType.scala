@@ -1,7 +1,7 @@
 package org.ml4ai.skema.gromet.model.scala
 
-import org.json4s.JsonAST.JString
-import org.json4s.{DefaultFormats, Formats, JValue}
+import org.json4s.JString
+import org.json4s.JValue
 import org.json4s.JsonDSL._
 
 case class AttributeType(
@@ -14,9 +14,7 @@ case class AttributeType(
   def toJson: JValue = JString(value)
 }
 
-object AttributeType {
-  implicit val formats: Formats = DefaultFormats
-
+object AttributeType extends ModelBuilder {
   val values = Set(
     "FN",
     "IMPORT"

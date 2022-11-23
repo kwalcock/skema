@@ -1,43 +1,46 @@
 package org.ml4ai.skema.gromet.model.scala
 
-import org.json4s.{DefaultFormats, Formats, JValue}
+import org.json4s.JValue
 import org.json4s.JsonDSL._
 
 case class GrometBoxFunction(
+  nameOpt: Option[String] = None, // GrometObject
+  metadataOpt: Option[Int] = None, // GrometBox
   functionTypeOpt: Option[FunctionType] = None,
   contentsOpt: Option[Int] = None,
   valueOpt: Option[LiteralValue] = None,
-  metadataOpt: Option[Int] = None
 ) extends Model {
   import GrometBoxFunction._
 
   def toJson: JValue = {
+    (METADATA -> metadataOpt) ~
+    (NAME -> nameOpt) ~
     (FUNCTION_TYPE -> functionTypeOpt.map(_.toJson)) ~
     (CONTENTS -> contentsOpt) ~
     (VALUE -> valueOpt.map(_.toJson)) ~
-    (METADATA -> metadataOpt)
   }
 }
 
-object GrometBoxFunction {
-  implicit val formats: Formats = DefaultFormats
-
-  val FUNCTION_TYPE = "functionType"
+object GrometBoxFunction extends ModelBuilder {
+  val METADATA = "metadata"
+  val NAME = "name"
+  val FUNCTION_TYPE = "function_type"
   val CONTENTS = "contents"
   val VALUE = "value"
-  val METADATA = "metadata"
 
   def fromJson(jValue: JValue): GrometBoxFunction = {
+    val metadataOpt = (jValue \ METADATA).extractOpt[Int]
+    val nameOpt = (jValue \ NAME).extractOpt[String]
     val functionTypeOpt = (jValue \ FUNCTION_TYPE).extractOpt[JValue].map(FunctionType.fromJson)
     val contentsOpt = (jValue \ CONTENTS).extractOpt[Int]
     val valueOpt = (jValue \ VALUE).extractOpt[JValue].map(LiteralValue.fromJson)
-    val metadataOpt = (jValue \ METADATA).extractOpt[Int]
 
     GrometBoxFunction(
+      metadataOpt,
+      nameOpt,
       functionTypeOpt,
       contentsOpt,
-      valueOpt,
-      metadataOpt
+      valueOpt
     )
   }
 }

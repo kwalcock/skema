@@ -1,6 +1,6 @@
 package org.ml4ai.skema.gromet.model.scala
 
-import org.json4s.{DefaultFormats, Formats, JValue}
+import org.json4s.JValue
 import org.json4s.JsonDSL._
 
 case class CodeFileReference (
@@ -21,9 +21,7 @@ case class CodeFileReference (
   }
 }
 
-object CodeFileReference {
-  implicit val formats: Formats = DefaultFormats
-
+object CodeFileReference extends ModelBuilder {
   // This could be a map of fields, each with toJson and fromJson
   // Would like to know all keys in case there is something extra in error.
   // Maybe toJson given a CodeFileReference so that can extract things from it?

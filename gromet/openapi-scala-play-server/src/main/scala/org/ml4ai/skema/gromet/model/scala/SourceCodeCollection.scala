@@ -1,48 +1,46 @@
 package org.ml4ai.skema.gromet.model.scala
 
-import org.json4s.{DefaultFormats, Formats, JArray, JValue}
+import org.json4s.{JArray, JValue}
 import org.json4s.JsonDSL._
 
 case class SourceCodeCollection(
-  metadataTypeOpt: Option[String] = None,
+  provenanceOpt: Option[Provenance] = None, // Metadata
+  metadataTypeOpt: Option[String] = Some("source_code_collection"),
   nameOpt: Option[String] = None,
   globalReferenceIdOpt: Option[String] = None,
-  filesOpt: Option[List[CodeFileReference]] = None,
-  provenanceOpt: Option[Provenance] = None
+  filesOpt: Option[List[CodeFileReference]] = None
 ) extends Model {
   import SourceCodeCollection._
 
   def toJson: JValue = {
+    (PROVENANCE -> provenanceOpt.map(_.toJson)) ~
     (METADATA_TYPE -> metadataTypeOpt) ~
     (NAME -> nameOpt) ~
     (GLOBAL_REFERENCE_ID -> globalReferenceIdOpt) ~
-    (FILES -> filesOpt) ~ // This is a list
-    (PROVENANCE -> provenanceOpt.map(_.toJson))
+    (FILES -> filesOpt) // This is a list
   }
 }
 
-object SourceCodeCollection {
-  implicit val formats: Formats = DefaultFormats
-
-  val METADATA_TYPE = "metadataType"
-  val NAME = "name"
-  val GLOBAL_REFERENCE_ID = "globalReferenceId"
-  val FILES = "files"
+object SourceCodeCollection extends ModelBuilder {
   val PROVENANCE = "provenance"
+  val METADATA_TYPE = "metadata_type"
+  val NAME = "name"
+  val GLOBAL_REFERENCE_ID = "global_reference_id"
+  val FILES = "files"
 
   def fromJson(jValue: JValue): SourceCodeCollection = {
+    val provenanceOpt = (jValue \ PROVENANCE).extractOpt[JValue].map(Provenance.fromJson)
     val metadataTypeOpt = (jValue \ METADATA_TYPE).extractOpt[String]
     val nameOpt = (jValue \ NAME).extractOpt[String]
     val globalReferenceIdOpt = (jValue \ GLOBAL_REFERENCE_ID).extractOpt[Int]
     val filesOpt = (jValue \ FILES).extractOpt[JArray].map(CodeFileReference.fromJson)
-    val provenanceOpt = (jValue \ PROVENANCE).extractOpt[JValue].map(Provenance.fromJson)
 
     SourceCodeCollection(
+      provenanceOpt,
       metadataTypeOpt,
       nameOpt,
       globalReferenceIdOpt,
-      filesOpt,
-      provenanceOpt
+      filesOpt
     )
   }
 }

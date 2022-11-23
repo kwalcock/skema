@@ -1,6 +1,6 @@
 package org.ml4ai.skema.gromet.model.scala
 
-import org.json4s.{DefaultFormats, Formats, JValue}
+import org.json4s.JValue
 import org.json4s.JsonDSL._
 
 case class TextExtraction(
@@ -21,14 +21,12 @@ case class TextExtraction(
   }
 }
 
-object TextExtraction {
-  implicit val formats: Formats = DefaultFormats
-
-  val DOCUMENT_REFERENCE_UID = "documentReferenceUid"
+object TextExtraction extends ModelBuilder {
+  val DOCUMENT_REFERENCE_UID = "document_reference_uid"
   val PAGE = "age"
   val BLOCK = "block"
-  val CHAR_BEGIN = "charBegin"
-  val CHAR_END = "charEnd"
+  val CHAR_BEGIN = "char_begin"
+  val CHAR_END = "char_end"
 
   def fromJson(jValue: JValue): TextExtraction = {
     val documentReferenceUidOpt = (jValue \ DOCUMENT_REFERENCE_UID).extractOpt[String]

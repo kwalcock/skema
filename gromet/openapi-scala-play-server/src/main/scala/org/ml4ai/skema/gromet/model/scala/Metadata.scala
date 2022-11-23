@@ -1,7 +1,7 @@
 package org.ml4ai.skema.gromet.model.scala
 
 import org.json4s.JsonAST.JObject
-import org.json4s.{DefaultFormats, Formats, JField, JValue}
+import org.json4s.{JField, JValue}
 import org.json4s.JsonDSL._
 
 case class Metadata(
@@ -9,14 +9,12 @@ case class Metadata(
 ) extends Model {
   import Metadata._
 
-  def toJson: JValue = new JObject(List(
-    JField(PROVENANCE, provenanceOpt.map(_.toJson))
-  ))
+  def toJson: JValue = {
+    (PROVENANCE -> provenanceOpt.map(_.toJson))
+  }
 }
 
-object Metadata {
-  implicit val formats: Formats = DefaultFormats
-
+object Metadata extends ModelBuilder {
   val PROVENANCE = "PROVENANCE"
 
   def fromJson(jValue: JValue): Metadata = {
@@ -27,4 +25,3 @@ object Metadata {
     )
   }
 }
-

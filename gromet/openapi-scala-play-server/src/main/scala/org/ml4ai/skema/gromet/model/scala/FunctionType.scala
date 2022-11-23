@@ -1,7 +1,7 @@
 package org.ml4ai.skema.gromet.model.scala
 
-import org.json4s.JsonAST.JString
-import org.json4s.{DefaultFormats, Formats, JValue}
+import org.json4s.JString
+import org.json4s.JValue
 import org.json4s.JsonDSL._
 
 case class FunctionType(
@@ -14,9 +14,7 @@ case class FunctionType(
   def toJson: JValue = JString(value)
 }
 
-object FunctionType {
-  implicit val formats: Formats = DefaultFormats
-
+object FunctionType extends ModelBuilder {
   val values = Set(
     "FUNCTION",
     "EXPRESSION",

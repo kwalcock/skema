@@ -1,30 +1,28 @@
 package org.ml4ai.skema.gromet.model.scala
 
-import org.json4s.{DefaultFormats, Formats, JValue}
+import org.json4s.JValue
 import org.json4s.JsonDSL._
 
 case class GrometCreation(
-  metadataTypeOpt: Option[String] = None,
-  grometVersionOpt: Option[String] = None,
-  provenanceOpt: Option[Provenance] = None
+  provenanceOpt: Option[Provenance] = None, // Metadata
+  metadataTypeOpt: Option[String] = Some("promet_creation"),
+  grometVersionOpt: Option[String] = Some("0.1.2")
 ) extends Model {
   import GrometCreation._
 
   // TODO: accessors
 
   def toJson: JValue = {
+    (PROVENANCE -> provenanceOpt.map(_.toJson)) ~
     (METADATA_TYPE -> metadataTypeOpt) ~
-    (GROMET_VERSION -> grometVersionOpt) ~
-    (PROVENANCE -> provenanceOpt.map(_.toJson))
+    (GROMET_VERSION -> grometVersionOpt)
   }
 }
 
-object GrometCreation {
-  implicit val formats: Formats = DefaultFormats
-
-  val METADATA_TYPE = "metadataType"
-  val GROMET_VERSION = "grometVersion"
+object GrometCreation extends ModelBuilder {
   val PROVENANCE = "provenance"
+  val METADATA_TYPE = "metadata_type"
+  val GROMET_VERSION = "gromet_version"
 
   def fromJson(jValue: JValue): GrometCreation = {
     val metadataTypeOpt = (jValue \ METADATA_TYPE).extractOpt[String]
@@ -32,9 +30,9 @@ object GrometCreation {
     val provenanceOpt = (jValue \ PROVENANCE).extractOpt[JValue].map(Provenance.fromJson)
 
     GrometCreation(
+      provenanceOpt,
       metadataTypeOpt,
-      grometVersionOpt,
-      provenanceOpt
+      grometVersionOpt
     )
   }
 }

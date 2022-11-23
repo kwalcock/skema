@@ -1,6 +1,6 @@
 package org.ml4ai.skema.gromet.model.scala
 
-import org.json4s.{DefaultFormats, Formats, JValue}
+import org.json4s.JValue
 import org.json4s.JsonDSL._
 
 case class TextualDocumentReference(
@@ -24,15 +24,13 @@ case class TextualDocumentReference(
   }
 }
 
-object TextualDocumentReference {
-  implicit val formats: Formats = DefaultFormats
-
+object TextualDocumentReference extends ModelBuilder {
   val UID = "uid"
-  val GLOBAL_REFERENCE_ID = "globalReferenceId"
-  val COSMOS_ID = "cosmosId"
-  val COSMOS_VERSION_NUMBER = "cosmosVersionNumber"
-  val SKEMA_ID = "skemaId"
-  val SKEMA_VERSION_NUMBER = "skemaVersionNumber"
+  val GLOBAL_REFERENCE_ID = "global_reference_id"
+  val COSMOS_ID = "cosmos_id"
+  val COSMOS_VERSION_NUMBER = "cosmos_version_number"
+  val SKEMA_ID = "skema_id"
+  val SKEMA_VERSION_NUMBER = "skema_version_number"
 
   def fromJson(jValue: JValue): TextualDocumentReference = {
     val uidOpt = (jValue \ UID).extractOpt[String]

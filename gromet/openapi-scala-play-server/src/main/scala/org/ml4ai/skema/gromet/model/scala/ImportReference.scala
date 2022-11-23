@@ -1,6 +1,6 @@
 package org.ml4ai.skema.gromet.model.scala
 
-import org.json4s.{DefaultFormats, Formats, JValue}
+import org.json4s.JValue
 import org.json4s.JsonDSL._
 
 case class ImportReference(
@@ -21,11 +21,9 @@ case class ImportReference(
   }
 }
 
-object ImportReference {
-  implicit val formats: Formats = DefaultFormats
-
+object ImportReference extends ModelBuilder {
   val NAME = "name"
-  val SRC_LANGUAGE = "srcLanguage"
+  val SRC_LANGUAGE = "src_language"
   val TYPE = "type"
   val VERSION = "version"
   val URI = "uri"
@@ -35,7 +33,7 @@ object ImportReference {
     val srcLanguageOpt = (jValue \ SRC_LANGUAGE).extractOpt[String]
     val typeOpt = (jValue \ TYPE).extractOpt[JValue].map(ImportType.fromJson)
     val versionOpt = (jValue \ VERSION).extractOpt[String]
-    val uriOpt = (jValue \ URI).extractOpt[JValue].map(TypedValue.fromJsno)
+    val uriOpt = (jValue \ URI).extractOpt[JValue].map(TypedValue.fromJson)
 
     ImportReference(
       nameOpt,

@@ -1,6 +1,6 @@
 package org.ml4ai.skema.gromet.model.scala
 
-import org.json4s.{DefaultFormats, Formats, JValue}
+import org.json4s.JValue
 import org.json4s.JsonDSL._
 
 case class LiteralValue(
@@ -15,10 +15,8 @@ case class LiteralValue(
   }
 }
 
-object LiteralValue {
-  implicit val formats: Formats = DefaultFormats
-
-  val VALUE_TYPE = "valueType"
+object LiteralValue extends ModelBuilder {
+  val VALUE_TYPE = "value_type"
   val VALUE = "value"
 
   def fromJson(jValue: JValue): LiteralValue = {
