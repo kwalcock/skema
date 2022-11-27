@@ -1,13 +1,15 @@
 package org.ml4ai.skema.gromet.model.scala.v0_1_4
 
-import org.json4s.JValue
+import org.json4s.{JString, JValue}
 import org.json4s.JsonDSL._
 import org.ml4ai.skema.gromet.model.scala.v0_1_4.utils.{MetadataModel, MetadataModelBuilder}
+
+import java.util.UUID
 
 case class SourceCodeReference(
   provenanceOpt: Option[Provenance] = None, // Metadata
   metadataTypeOpt: Option[String] = Some(SourceCodeReference.TYPE),
-  codeFileReferenceUidOpt: Option[String /*UUID*/] = None,
+  codeFileReferenceUidOpt: Option[UUID] = None,
   lineBeginOpt: Option[Int] = None,
   lineEndOpt: Option[Int] = None,
   colBeginOpt: Option[Int] = None,
@@ -18,7 +20,7 @@ case class SourceCodeReference(
   def toJson: JValue = {
     (PROVENANCE -> provenanceOpt.map(_.toJson)) ~
     (METADATA_TYPE -> metadataTypeOpt) ~
-    (CODE_FILE_REFERENCE_UID -> codeFileReferenceUidOpt) ~ // .map(toJson)) ~
+    (CODE_FILE_REFERENCE_UID -> codeFileReferenceUidOpt.map(toJson)) ~
     (LINE_BEGIN -> lineBeginOpt) ~
     (LINE_END -> lineEndOpt) ~
     (COL_BEGIN -> colBeginOpt) ~
@@ -40,7 +42,7 @@ object SourceCodeReference extends MetadataModelBuilder {
   def fromJson(jValue: JValue): SourceCodeReference = {
     val provenanceOpt = (jValue \ PROVENANCE).extractOpt[JValue].map(Provenance.fromJson)
     val metadataTypeOpt = (jValue \ METADATA_TYPE).extractOpt[String]
-    val codeFileReferenceUidOpt = (jValue \ CODE_FILE_REFERENCE_UID).extractOpt[String] // JString].map(uuidFromJson)
+    val codeFileReferenceUidOpt = (jValue \ CODE_FILE_REFERENCE_UID).extractOpt[JValue].map(uuidFromJson)
     val lineBeginOpt = (jValue \ LINE_BEGIN).extractOpt[Int]
     val lineEndOpt = (jValue \ LINE_END).extractOpt[Int]
     val colBeginOpt = (jValue \ COL_BEGIN).extractOpt[Int]

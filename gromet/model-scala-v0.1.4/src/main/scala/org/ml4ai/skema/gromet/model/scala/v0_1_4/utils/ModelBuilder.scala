@@ -12,7 +12,11 @@ abstract class ModelBuilder {
   // TODO
   def dateFromJson(jString: JString): Date = new Date()
 
-  def uuidFromJson(jString: JString): UUID = ???
+  def uuidFromJson(jValue: JValue): UUID = {
+    val string = jValue.extract[String]
+
+    UUID.fromString(string)
+  }
 }
 
 object ModelBuilder {

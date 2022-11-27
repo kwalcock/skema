@@ -9,7 +9,7 @@ abstract class Model {
 
   def toJson(date: Date): JString = JString("hello")
 
-  def toJson(uuid: UUID): JString = JString("uuid")
+  def toJson(uuid: UUID): JString = JString(uuid.toString)
 
 //  def toJson(metadataTypeOpt: Option[String]): JField = {
 //    new JField(ModelBuilder.METADATA_TYPE, metadataTypeOpt.map(JString).getOrElse(JNull))
