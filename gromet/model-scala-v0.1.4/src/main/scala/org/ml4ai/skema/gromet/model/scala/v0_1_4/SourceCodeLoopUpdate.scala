@@ -31,7 +31,17 @@ object SourceCodeLoopUpdate extends MetadataModelBuilder {
   val SOURCE_LANGUAGE_VERSION = "source_language_version"
   val LOOP_NAME = "loop_name"
 
+  override val keys = Set(
+    PROVENANCE,
+    METADATA_TYPE,
+    SOURCE_LANGUAGE,
+    SOURCE_LANGUAGE_VERSION,
+    LOOP_NAME
+  )
+
   def fromJson(jValue: JValue): SourceCodeLoopUpdate = {
+    checkKeys(jValue)
+
     val provenanceOpt = (jValue \ PROVENANCE).extractOpt[JValue].map(Provenance.fromJson)
     val metadataTypeOpt = (jValue \ METADATA_TYPE).extractOpt[String]
     val sourceLanguageOpt = (jValue \ SOURCE_LANGUAGE).extractOpt[String]

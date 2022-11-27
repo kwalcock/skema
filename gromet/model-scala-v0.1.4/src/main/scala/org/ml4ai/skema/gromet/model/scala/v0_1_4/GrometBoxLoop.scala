@@ -35,7 +35,17 @@ object GrometBoxLoop extends ModelBuilder {
   val INIT = "init"
   val BODY = "body"
 
+  override val keys = Set(
+    METADATA,
+    NAME,
+    CONDITION,
+    INIT,
+    BODY
+  )
+
   def fromJson(jValue: JValue): GrometBoxLoop = {
+    checkKeys(jValue)
+
     val metadataOpt = (jValue \ METADATA).extractOpt[Int]
     val nameOpt = (jValue \ NAME).extractOpt[String]
     val conditionOpt = (jValue \ CONDITION).extractOpt[Int]

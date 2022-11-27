@@ -31,7 +31,17 @@ object TextParameter extends MetadataModelBuilder {
   val VARIABLE_IDENTIFIER = "variable_identifier"
   val VALUE = "value"
 
+  override val keys = Set(
+    PROVENANCE,
+    METADATA_TYPE,
+    TEXT_EXTRACTION,
+    VARIABLE_IDENTIFIER,
+    VALUE
+  )
+
   def fromJson(jValue: JValue): TextParameter = {
+    checkKeys(jValue)
+
     val provenanceOpt = (jValue \ PROVENANCE).extractOpt[JValue].map(Provenance.fromJson)
     val metadataTypeOpt = (jValue \ METADATA_TYPE).extractOpt[String]
     val textExtractionOpt = (jValue \ TEXT_EXTRACTION).extractOpt[JValue].map(TextExtraction.fromJson)

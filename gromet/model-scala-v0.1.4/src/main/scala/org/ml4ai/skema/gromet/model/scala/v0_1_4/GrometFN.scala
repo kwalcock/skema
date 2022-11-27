@@ -115,7 +115,46 @@ object GrometFN extends ModelBuilder {
   val WCOPO = "wcopo"
   val WC_CARGS = "wc_cargs"
 
+  override val keys = Set(
+    METADATA,
+    NAME,
+    B,
+    OPI,
+    OPO,
+    WOPIO,
+    BF,
+    PIF,
+    POF,
+    WFOPI,
+    WFL,
+    WFF,
+    WFC,
+    WFOPO,
+    BL,
+    PIL,
+    POL,
+    WLOPI,
+    WLL,
+    WLF,
+    WLC,
+    WLOPO,
+    WL_IIARGS,
+    WL_IOARGS,
+    WL_CARGS,
+    BC,
+    PIC,
+    POC,
+    WCOPI,
+    WCL,
+    WCF,
+    WCC,
+    WCOPO,
+    WC_CARGS
+  )
+
   def fromJson(jValue: JValue): GrometFN = {
+    checkKeys(jValue)
+
     val metadataOpt = (jValue \ METADATA).extractOpt[Int]
     val nameOpt = (jValue \ NAME).extractOpt[String]
     val bOpt = (jValue \ B).extractOpt[JArray].map(_.arr.map(GrometBoxFunction.fromJson))

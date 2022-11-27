@@ -39,7 +39,19 @@ object SourceCodeReference extends MetadataModelBuilder {
   val COL_BEGIN = "col_begin"
   val COL_END = "col_end"
 
+  override val keys = Set(
+    PROVENANCE,
+    METADATA_TYPE,
+    CODE_FILE_REFERENCE_UID,
+    LINE_BEGIN,
+    LINE_END,
+    COL_BEGIN,
+    COL_END
+  )
+
   def fromJson(jValue: JValue): SourceCodeReference = {
+    checkKeys(jValue)
+
     val provenanceOpt = (jValue \ PROVENANCE).extractOpt[JValue].map(Provenance.fromJson)
     val metadataTypeOpt = (jValue \ METADATA_TYPE).extractOpt[String]
     val codeFileReferenceUidOpt = (jValue \ CODE_FILE_REFERENCE_UID).extractOpt[JValue].map(uuidFromJson)

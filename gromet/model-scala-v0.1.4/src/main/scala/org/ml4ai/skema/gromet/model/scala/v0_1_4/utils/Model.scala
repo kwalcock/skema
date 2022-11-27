@@ -6,6 +6,7 @@ import java.time.OffsetDateTime
 import java.util.UUID
 
 abstract class Model {
+
   def toJson: JValue
 
   def toJson(offsetDateTime: OffsetDateTime): JString = {

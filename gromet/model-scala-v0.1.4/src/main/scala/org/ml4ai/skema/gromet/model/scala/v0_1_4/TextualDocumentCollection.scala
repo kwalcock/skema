@@ -27,7 +27,15 @@ object TextualDocumentCollection extends MetadataModelBuilder {
   val METADATA_TYPE = "metadata_type"
   val DOCUMENTS = "documents"
 
+  override val keys = Set(
+    PROVENANCE,
+    METADATA_TYPE,
+    DOCUMENTS
+  )
+
   def fromJson(jValue: JValue): TextualDocumentCollection = {
+    checkKeys(jValue)
+
     val provenanceOpt = (jValue \ PROVENANCE).extractOpt[JValue].map(Provenance.fromJson)
     val metadataTypeOpt = (jValue \ METADATA_TYPE).extractOpt[String]
     val documentsOpt = (jValue \ DOCUMENTS).extractOpt[JArray].map { jArray =>

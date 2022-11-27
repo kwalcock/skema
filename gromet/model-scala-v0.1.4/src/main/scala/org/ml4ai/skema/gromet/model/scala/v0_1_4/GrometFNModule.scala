@@ -33,6 +33,8 @@ case class GrometFNModule(
 }
 
 object GrometFNModule extends ModelBuilder {
+  val METADATA_TYPE = "metadata_type"
+
   val METADATA = "metadata"
   val SCHEMA = "schema"
   val SCHEMA_VERSION = "schema_version"
@@ -41,9 +43,19 @@ object GrometFNModule extends ModelBuilder {
   val ATTRIBUTES = "attributes"
   val METADATA_COLLECTION = "metadata_collection"
 
-  val METADATA_TYPE = "metadata_type"
+  override val keys = Set(
+    METADATA,
+    SCHEMA,
+    SCHEMA_VERSION,
+    NAME,
+    FN,
+    ATTRIBUTES,
+    METADATA_COLLECTION
+  )
 
   def fromJson(jValue: JValue): GrometFNModule = {
+    checkKeys(jValue)
+
     val metadataOpt = (jValue \ METADATA).extractOpt[Int]
     val schemaOpt = (jValue \ SCHEMA).extractOpt[String]
     val schemaVersionOpt = (jValue \ SCHEMA_VERSION).extractOpt[String]

@@ -29,7 +29,17 @@ object GrometBoxFunction extends ModelBuilder {
   val CONTENTS = "contents"
   val VALUE = "value"
 
+  override val keys = Set(
+    METADATA,
+    NAME,
+    FUNCTION_TYPE,
+    CONTENTS,
+    VALUE
+  )
+
   def fromJson(jValue: JValue): GrometBoxFunction = {
+    checkKeys(jValue)
+
     val metadataOpt = (jValue \ METADATA).extractOpt[Int]
     val nameOpt = (jValue \ NAME).extractOpt[String]
     val functionTypeOpt = (jValue \ FUNCTION_TYPE).extractOpt[JValue].map(FunctionType.fromJson)

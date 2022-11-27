@@ -27,7 +27,15 @@ object EquationExtraction extends ModelBuilder {
   val DOCUMENT_REFERENCE_UID = "document_reference_uid"
   val EQUATION_NUMBER = "equation_number"
 
+  override val keys = Set(
+    SOURCE_TYPE,
+    DOCUMENT_REFERENCE_UID,
+    EQUATION_NUMBER
+  )
+
   def fromJson(jValue: JValue): EquationExtraction = {
+    checkKeys(jValue)
+
     val sourceTypeOpt = (jValue \ SOURCE_TYPE).extractOpt[String]
     val documentReferenceUidOpt = (jValue \ DOCUMENT_REFERENCE_UID).extractOpt[String]
     val equationNumberOpt = (jValue \ EQUATION_NUMBER).extractOpt[Int]

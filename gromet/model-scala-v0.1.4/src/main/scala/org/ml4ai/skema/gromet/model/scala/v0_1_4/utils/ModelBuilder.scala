@@ -1,12 +1,23 @@
 package org.ml4ai.skema.gromet.model.scala.v0_1_4.utils
 
-import org.json4s.{DefaultFormats, Formats, JString, JValue}
+import org.json4s.{DefaultFormats, Formats, JObject, JString, JValue}
 
 import java.time.OffsetDateTime
 import java.util.UUID
 
-abstract class ModelBuilder {
+abstract class ModelBuilder() {
   implicit val formats: Formats = DefaultFormats
+
+  val keys: Set[String] = Set.empty
+
+  def checkKeys(jValue: JValue): Unit = {
+    jValue.extractOpt[JObject].map { jObject =>
+      jObject.values.keys.foreach { key =>
+        if (!keys(key))
+          throw new RuntimeException(s"""Key "$key" is unexpected in $jValue""")
+      }
+    }
+  }
 
   def fromJson(jValue: JValue): Model
 

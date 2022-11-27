@@ -35,7 +35,17 @@ object GrometBoxConditional extends ModelBuilder {
   val BODY_IF = "body_if"
   val BODY_ELSE = "body_else"
 
+  override val keys = Set(
+    METADATA,
+    NAME,
+    CONDITION,
+    BODY_IF,
+    BODY_ELSE
+  )
+
   def fromJson(jValue: JValue): GrometBoxConditional = {
+    checkKeys(jValue)
+
     val metadataOpt = (jValue \ METADATA).extractOpt[Int]
     val nameOpt = (jValue \ NAME).extractOpt[String]
     val conditionOpt = (jValue \ CONDITION).extractOpt[Int]

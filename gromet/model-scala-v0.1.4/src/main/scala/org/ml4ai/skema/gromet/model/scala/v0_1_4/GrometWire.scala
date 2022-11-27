@@ -26,7 +26,16 @@ object GrometWire extends ModelBuilder {
   val SRC = "src"
   val TGT = "tgt"
 
+  override val keys = Set(
+    METADATA,
+    NAME,
+    SRC,
+    TGT
+  )
+
   def fromJson(jValue: JValue): GrometWire = {
+    checkKeys(jValue)
+
     val metadataOpt = (jValue \ METADATA).extractOpt[Int]
     val nameOpt = (jValue \ NAME).extractOpt[String]
     val srcOpt = (jValue \ SRC).extractOpt[Int]

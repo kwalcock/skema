@@ -25,7 +25,14 @@ object Provenance extends ModelBuilder {
   val METHOD = "method"
   val TIMESTAMP = "timestamp"
 
+  override val keys = Set(
+    METHOD,
+    TIMESTAMP
+  )
+
   def fromJson(jValue: JValue): Provenance = {
+    checkKeys(jValue)
+
     val methodOpt = (jValue \ METHOD).extractOpt[String]
     val timestampOpt = (jValue \ TIMESTAMP).extractOpt[JValue].map(offsetDateTimeFromJson)
 

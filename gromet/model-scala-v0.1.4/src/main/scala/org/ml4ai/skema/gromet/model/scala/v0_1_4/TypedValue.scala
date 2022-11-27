@@ -23,7 +23,15 @@ object TypedValue extends ModelBuilder {
   val VALUE = "value"
   val INDEX = "index"
 
+  override val keys = Set(
+    TYPE,
+    VALUE,
+    INDEX
+  )
+
   def fromJson(jValue: JValue): TypedValue = {
+    checkKeys(jValue)
+
     val typeOpt = (jValue \ TYPE).extractOpt[String]
     val valueOpt = (jValue \ VALUE).extractOpt[JValue]
     val indexOpt = (jValue \ INDEX).extractOpt[Int]

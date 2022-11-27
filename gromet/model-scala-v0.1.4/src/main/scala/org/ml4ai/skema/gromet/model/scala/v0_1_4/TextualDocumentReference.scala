@@ -33,7 +33,18 @@ object TextualDocumentReference extends ModelBuilder {
   val SKEMA_ID = "skema_id"
   val SKEMA_VERSION_NUMBER = "skema_version_number"
 
+  override val keys = Set(
+    UID,
+    GLOBAL_REFERENCE_ID,
+    COSMOS_ID,
+    COSMOS_VERSION_NUMBER,
+    SKEMA_ID,
+    SKEMA_VERSION_NUMBER
+  )
+
   def fromJson(jValue: JValue): TextualDocumentReference = {
+    checkKeys(jValue)
+
     val uidOpt = (jValue \ UID).extractOpt[String]
     val globalReferenceIdOpt = (jValue \ GLOBAL_REFERENCE_ID).extractOpt[String]
     val cosmosIdOpt = (jValue \ COSMOS_ID).extractOpt[String]

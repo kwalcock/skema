@@ -17,7 +17,13 @@ case class Metadata(
 object Metadata extends ModelBuilder {
   val PROVENANCE = "PROVENANCE"
 
+  override val keys = Set(
+    PROVENANCE
+  )
+
   def fromJson(jValue: JValue): Metadata = {
+    checkKeys(jValue)
+
     val provenanceOpt = (jValue \ PROVENANCE).extractOpt[JValue].map(Provenance.fromJson)
 
     Metadata(

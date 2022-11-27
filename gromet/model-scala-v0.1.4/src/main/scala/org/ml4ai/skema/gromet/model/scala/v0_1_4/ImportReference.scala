@@ -29,7 +29,17 @@ object ImportReference extends ModelBuilder {
   val VERSION = "version"
   val URI = "uri"
 
+  override val keys = Set(
+    NAME,
+    SRC_LANGUAGE,
+    TYPE,
+    VERSION,
+    URI
+  )
+
   def fromJson(jValue: JValue): ImportReference = {
+    checkKeys(jValue)
+
     val nameOpt = (jValue \ NAME).extractOpt[String]
     val srcLanguageOpt = (jValue \ SRC_LANGUAGE).extractOpt[String]
     val typeOpt = (jValue \ TYPE).extractOpt[JValue].map(ImportType.fromJson)

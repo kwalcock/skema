@@ -33,11 +33,21 @@ object EquationDefinition extends MetadataModelBuilder {
 
   val PROVENANCE = "provenance"
   val METADATA_TYPE = "metadata_type"
-  val EQUATION_EXTRACTION = "equation_xtraction"
+  val EQUATION_EXTRACTION = "equation_extraction"
   val EQUATION_MATHML_SOURCE = "equation_mathml_source"
   val EQUATION_LATEX_SOURCE = "equation_latex_source"
 
+  override val keys = Set(
+    PROVENANCE,
+    METADATA_TYPE,
+    EQUATION_EXTRACTION,
+    EQUATION_MATHML_SOURCE,
+    EQUATION_LATEX_SOURCE
+  )
+
   def fromJson(jValue: JValue): EquationDefinition = {
+    checkKeys(jValue)
+
     val provenanceOpt = (jValue \ PROVENANCE).extractOpt[JValue].map(Provenance.fromJson)
     val metadataTypeOpt = (jValue \ METADATA_TYPE).extractOpt[String]
     val equationExtractionOpt = (jValue \ EQUATION_EXTRACTION).extractOpt[JValue].map(EquationExtraction.fromJson)

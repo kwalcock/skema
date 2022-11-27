@@ -27,7 +27,15 @@ object GrometCreation extends MetadataModelBuilder {
   val METADATA_TYPE = "metadata_type"
   val GROMET_VERSION = "gromet_version"
 
+  override val keys = Set(
+    PROVENANCE,
+    METADATA_TYPE,
+    GROMET_VERSION
+  )
+
   def fromJson(jValue: JValue): GrometCreation = {
+    checkKeys(jValue)
+
     val metadataTypeOpt = (jValue \ METADATA_TYPE).extractOpt[String]
     val grometVersionOpt = (jValue \ GROMET_VERSION).extractOpt[String]
     val provenanceOpt = (jValue \ PROVENANCE).extractOpt[JValue].map(Provenance.fromJson)

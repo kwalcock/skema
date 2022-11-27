@@ -26,7 +26,16 @@ object GrometPort extends ModelBuilder {
   val NAME = "name"
   val BOX = "box"
 
+  override val keys = Set(
+    METADATA,
+    ID,
+    NAME,
+    BOX
+  )
+
   def fromJson(jValue: JValue): GrometPort = {
+    checkKeys(jValue)
+
     val metadataOpt = (jValue \ METADATA).extractOpt[Int]
     val idOpt = (jValue \ ID).extractOpt[Int]
     val nameOpt = (jValue \ NAME).extractOpt[String]

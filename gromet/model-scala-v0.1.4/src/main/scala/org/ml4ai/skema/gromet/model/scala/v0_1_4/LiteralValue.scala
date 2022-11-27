@@ -20,7 +20,14 @@ object LiteralValue extends ModelBuilder {
   val VALUE_TYPE = "value_type"
   val VALUE = "value"
 
+  override val keys = Set(
+    VALUE_TYPE,
+    VALUE
+  )
+
   def fromJson(jValue: JValue): LiteralValue = {
+    checkKeys(jValue)
+
     val valueTypeOpt = (jValue \ VALUE_TYPE).extractOpt[String]
     val valueOpt = (jValue \ VALUE).extractOpt[JValue]
 

@@ -31,7 +31,17 @@ object SourceCodeCollection extends MetadataModelBuilder {
   val GLOBAL_REFERENCE_ID = "global_reference_id"
   val FILES = "files"
 
+  override val keys = Set(
+    PROVENANCE,
+    METADATA_TYPE,
+    NAME,
+    GLOBAL_REFERENCE_ID,
+    FILES
+  )
+
   def fromJson(jValue: JValue): SourceCodeCollection = {
+    checkKeys(jValue)
+
     val provenanceOpt = (jValue \ PROVENANCE).extractOpt[JValue].map(Provenance.fromJson)
     val metadataTypeOpt = (jValue \ METADATA_TYPE).extractOpt[String]
     val nameOpt = (jValue \ NAME).extractOpt[String]

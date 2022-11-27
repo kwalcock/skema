@@ -17,7 +17,13 @@ case class GrometObject(
 object GrometObject extends ModelBuilder {
   val METADATA = "metadata"
 
+  override val keys = Set(
+    METADATA
+  )
+
   def fromJson(jValue: JValue): GrometObject = {
+    checkKeys(jValue)
+
     val metadataOpt = (jValue \ METADATA).extractOpt[Int]
 
     GrometObject(

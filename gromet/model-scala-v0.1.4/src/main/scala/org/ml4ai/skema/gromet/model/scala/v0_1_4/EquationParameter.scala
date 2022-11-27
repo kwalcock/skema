@@ -37,7 +37,17 @@ object EquationParameter extends MetadataModelBuilder {
   val VARIABLE_IDENTIFIER = "variable_identifier"
   val VALUE = "value"
 
+  override val keys = Set(
+    PROVENANCE,
+    METADATA_TYPE,
+    EQUATION_EXTRACTION,
+    VARIABLE_IDENTIFIER,
+    VALUE
+  )
+
   def fromJson(jValue: JValue): EquationParameter = {
+    checkKeys(jValue)
+
     val provenanceOpt = (jValue \ PROVENANCE).extractOpt[JValue].map(Provenance.fromJson)
     val metadataTypeOpt = (jValue \ METADATA_TYPE).extractOpt[String]
     val equationExtractionOpt = (jValue \ EQUATION_EXTRACTION).extractOpt[JValue].map(EquationExtraction.fromJson)

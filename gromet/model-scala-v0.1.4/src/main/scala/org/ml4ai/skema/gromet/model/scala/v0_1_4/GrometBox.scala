@@ -23,7 +23,14 @@ object GrometBox extends ModelBuilder {
   val NAME = "name"
   val METADATA = "metadata"
 
+  override val keys = Set(
+    NAME,
+    METADATA
+  )
+
   def fromJson(jValue: JValue): GrometBox = {
+    checkKeys(jValue)
+
     val metadataOpt = (jValue \ METADATA).extractOpt[Int]
     val nameOpt = (jValue \ NAME).extractOpt[String]
 

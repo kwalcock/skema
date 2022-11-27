@@ -23,17 +23,18 @@ case class CodeFileReference (
 }
 
 object CodeFileReference extends ModelBuilder {
-  // This could be a map of fields, each with toJson and fromJson
-  // Would like to know all keys in case there is something extra in error.
-  // Maybe toJson given a CodeFileReference so that can extract things from it?
-  // CodeFileReference to inherit from Model[CodeFileReference] (the class).
-  // Has ListMap of keys and functions for to and from?
-
   val UID = "uid"
   val NAME = "name"
   val PATH = "path"
+  override val keys = Set(
+    UID,
+    NAME,
+    PATH
+  )
 
   def fromJson(jValue: JValue): CodeFileReference = {
+    checkKeys(jValue)
+
     val uidOpt = (jValue \ UID).extractOpt[String]
     val nameOpt = (jValue \ NAME).extractOpt[String]
     val pathOpt = (jValue \ PATH).extractOpt[String]

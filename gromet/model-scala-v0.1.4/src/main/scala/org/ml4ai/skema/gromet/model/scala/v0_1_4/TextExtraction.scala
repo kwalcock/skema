@@ -29,7 +29,17 @@ object TextExtraction extends ModelBuilder {
   val CHAR_BEGIN = "char_begin"
   val CHAR_END = "char_end"
 
+  override val keys = Set(
+    DOCUMENT_REFERENCE_UID,
+    PAGE,
+    BLOCK,
+    CHAR_BEGIN,
+    CHAR_END
+  )
+
   def fromJson(jValue: JValue): TextExtraction = {
+    checkKeys(jValue)
+
     val documentReferenceUidOpt = (jValue \ DOCUMENT_REFERENCE_UID).extractOpt[String]
     val pageOpt = (jValue \ PAGE).extractOpt[Int]
     val blockOpt = (jValue \ BLOCK).extractOpt[Int]
