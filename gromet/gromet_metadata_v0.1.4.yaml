@@ -35,14 +35,14 @@ info:
        `$OUTPUT_PATH/src/main/java/io/swagger/client/model/`
 
     If generating GroMEt Metadata schema data model classes in SKEMA (AutoMATES),
-    then after generating the above, follow the instructions here:
+    then afer generating the above, follow the instructions here:
     ```
     <automates>/automates/model_assembly/gromet/metadata/README.md
     ```
 
   contact:
     name: Clayton T. Morrison
-    email: claytonm@arizona.edu
+    email: claytonm@email.arizona.edu
   license:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
@@ -60,19 +60,19 @@ components:
       description: |
         Root type of Metadata.
       properties:
-#        gromet_src_id:
-#          description: |
-#            The identifier of the Gromet object within the GrometFNModule
-#            that this metadata is associated with.
-#          type: integer
+        #        gromet_src_id:
+        #          description: |
+        #            The identifier of the Gromet object within the GrometFNModule
+        #            that this metadata is associated with.
+        #          type: integer
         provenance:
           $ref: '#/components/schemas/Provenance'
 
     Provenance:
       description: Provenance of metadata.
-#      required:
-#        - method
-#        - timestamp
+      #      required:
+      #        - method
+      #        - timestamp
       properties:
         method:
           description: |
@@ -104,14 +104,14 @@ components:
     EquationExtraction:
       # title: <equation_extraction>
       description: Representation of equation extraction.
-#      required:
-#        - source_type
-#        - document_reference_uid
-#        - equation_number
+      #      required:
+      #        - source_type
+      #        - document_reference_uid
+      #        - equation_number
       properties:
-#        metadata_type:
-#          type: string
-#          default: "equation_extraction"
+        #        metadata_type:
+        #          type: string
+        #          default: "equation_extraction"
         source_type:
           type: string
           default: "equation_document_source"
@@ -129,17 +129,17 @@ components:
       description: |
         Representation of Text Extraction.
         Assumes COSMOS within-document reference coordinates to a span of text.
-#      required:
-##        - source_type
-#        - document_reference_uid
-#        - page
-#        - block
-#        - char_begin
-#        - char_end
+      #      required:
+      ##        - source_type
+      #        - document_reference_uid
+      #        - page
+      #        - block
+      #        - char_begin
+      #        - char_end
       properties:
-#        metadata_type:
-#          type: string
-#          default: "text_extraction"
+        #        metadata_type:
+        #          type: string
+        #          default: "text_extraction"
         document_reference_uid:
           description: uid of \<document_reference>
           type: string
@@ -164,10 +164,10 @@ components:
       title: <ANY>.SourceCodeReference
       description: |
         Reference to a source code span (sub-line, line, block).
-#      required:
-##        - code_type
-#        - code_file_reference_uid
-#        - line_begin
+      #      required:
+      ##        - code_type
+      #        - code_file_reference_uid
+      #        - line_begin
       properties:
         metadata_type:
           type: string
@@ -189,26 +189,26 @@ components:
           description: The end column of the identifier name string instance
           type: integer
 
-# Decision 2022-07-11: For now in GroMEt, any identifier name is used as the NAME of the GroMEt object
-#    SourceCodeIdentifierName:
-#      allOf:
-#        - $ref: '#/components/schemas/Metadata'
-#        title: <ANY>.SourceCodeIdentifierName
-#        description: |
-#          The original identifier name as it appears in the source code.
-#          This will happen under these conditions:
-#          (1) variable declaration and assignment to a variable => save to Port Output;
-#          (2) function declaration => save to BoxFunction;
-#          (3) function call => save to BoxFunction call box;
-#          etc...
-#        required:
-#          - identifier_name
-#        properties:
-#          metadata_type:
-#            type: string
-#            default: "source_code_identifier_name"
-#          identifier_name:
-#            type: string
+    # Decision 2022-07-11: For now in GroMEt, any identifier name is used as the NAME of the GroMEt object
+    #    SourceCodeIdentifierName:
+    #      allOf:
+    #        - $ref: '#/components/schemas/Metadata'
+    #        title: <ANY>.SourceCodeIdentifierName
+    #        description: |
+    #          The original identifier name as it appears in the source code.
+    #          This will happen under these conditions:
+    #          (1) variable desclaration and assignment to a variable => save to Port Output;
+    #          (2) function declaration => save to BoxFunction;
+    #          (3) function call => save to BoxFunction call box;
+    #          etc...
+    #        required:
+    #          - identifier_name
+    #        properties:
+    #          metadata_type:
+    #            type: string
+    #            default: "source_code_identifier_name"
+    #          identifier_name:
+    #            type: string
 
     SourceCodeDataType:
       allOf:
@@ -216,10 +216,10 @@ components:
       title: <BoxLiteralValue>.SourceCodeDataType
       description: |
         Information derived by Program Analysis inferring the literal value data type.
-#      required:
-#        - source_language
-#        - source_language_version
-#        - data_type
+      #      required:
+      #        - source_language
+      #        - source_language_version
+      #        - data_type
       properties:
         metadata_type:
           type: string
@@ -266,12 +266,12 @@ components:
           type: string
           description: |
             The name of the loop that this initialization is associated with.
-#        justification:
-#          type: string
-#          description: |
-#            Represent the justification for why Program Analysis introduced this
-#            initialization code.
-#            For example, when processing a Python for-loop, this should be \"for_loop\"
+    #        justification:
+    #          type: string
+    #          description: |
+    #            Represent the justification for why Program Analysis introduced this
+    #            initialization code.
+    #            For example, when processing a Python for-loop, this should be \"for_loop\"
 
     SourceCodeLoopUpdate:
       allOf:
@@ -321,19 +321,19 @@ components:
         gromet_version:
           type: string
           default: "0.1.2"  # Is there a way to get this by reference from info.version?
-#        timestamp:
-#          description: Creation timestamp
-#          type: string
-#          format: datetime
+    #        timestamp:
+    #          description: Creation timestamp
+    #          type: string
+    #          format: datetime
 
     SourceCodeCollection:
       allOf:
         - $ref: '#/components/schemas/Metadata'
       title: <GrometFNModule>.SourceCodeCollection
       description: Reference to a source code collection (e.g., a repository)
-#      required:
-#        - global_reference_id
-#        - files
+      #      required:
+      #        - global_reference_id
+      #        - files
       properties:
         metadata_type:
           type: string
@@ -371,8 +371,8 @@ components:
       description: >
         A collection of textual document references
         (e.g., documentation, scientific publication, etc.).
-#      required:
-#        - documents
+      #      required:
+      #        - documents
       properties:
         metadata_type:
           type: string
@@ -386,9 +386,9 @@ components:
     TextualDocumentReference:
       # title: <textual_document_reference>
       description: Document reference.
-#      required:
-#        - uid
-#        - global_reference_id
+      #      required:
+      #        - uid
+      #        - global_reference_id
       properties:
         uid:
           description: Unique identifier of the DocumentReference
@@ -430,8 +430,8 @@ components:
       description: >
         Association of an EquationExtraction with a GroMEt component
         (e.g., a GroMEt FN Function Box).
-#      required:
-#        - equation_extraction
+      #      required:
+      #        - equation_extraction
       properties:
         metadata_type:
           type: string
@@ -471,25 +471,25 @@ components:
     #       items:
     #         $ref: '#/components/schemas/code_span'
 
-#    data_type:
-#      allOf:
-#        - $ref: '#/components/schemas/metadata'
-#      title: <variable>.<data_type>
-#      description: >
-#        host: \<variable> <br>
-#        Data type associated with \<variable>.
-#      required:
-#        - data_type
-#      properties:
-#        type:
-#          default: "equation_parameter"
-#        data_type:
-#          description: >
-#            Primitive data types:<br>
-#            <em>Atomic</em>: \"BOOLEAN\", \"INTEGER\", \"FLOAT\", \"STRING\"<br>
-#            <em>Compound</em>: \"SET\", \"SEQUENCE\", \"DICTIONARY\", \"COMPOSITE\"
-#          type: string
-#          enum: [ BOOLEAN, INTEGER, FLOAT, STRING, SET, SEQUENCE, DICTIONARY, COMPOSITE ]
+    #    data_type:
+    #      allOf:
+    #        - $ref: '#/components/schemas/metadata'
+    #      title: <variable>.<data_type>
+    #      description: >
+    #        host: \<variable> <br>
+    #        Data type associated with \<variable>.
+    #      required:
+    #        - data_type
+    #      properties:
+    #        type:
+    #          default: "equation_parameter"
+    #        data_type:
+    #          description: >
+    #            Primitive data types:<br>
+    #            <em>Atomic</em>: \"BOOLEAN\", \"INTEGER\", \"FLOAT\", \"STRING\"<br>
+    #            <em>Compound</em>: \"SET\", \"SEQUENCE\", \"DICTIONARY\", \"COMPOSITE\"
+    #          type: string
+    #          enum: [ BOOLEAN, INTEGER, FLOAT, STRING, SET, SEQUENCE, DICTIONARY, COMPOSITE ]
 
     EquationParameter:
       allOf:
@@ -497,10 +497,10 @@ components:
       title: <PortOutput>.EquationParameter
       description: |
         Association of parameter values extracted from equations to host Port.
-#      required:
-#        - equation_extraction
-#        - variable_identifier
-#        - value
+      #      required:
+      #        - equation_extraction
+      #        - varaible_identifier
+      #        - value
       properties:
         metadata_type:
           type: string
@@ -520,10 +520,10 @@ components:
       title: <PortOutput>.TextDefinition
       description: |
         Definition of host derived from a text source.
-#      required:
-#        - text_extraction
-#        - variable_identifier
-#        - variable_definition
+      #      required:
+      #        - text_extraction
+      #        - variable_identifier
+      #        - variable_definition
       properties:
         metadata_type:
           type: string
@@ -544,10 +544,10 @@ components:
       title: <PortOutput>.TextParameter
       description: |
         Association of parameter values extracted from text to host Port.
-#      required:
-#        - text_extraction
-#        - variable_identifier
-#        - value
+      #      required:
+      #        - text_extraction
+      #        - variable_identifier
+      #        - value
       properties:
         metadata_type:
           type: string
@@ -560,40 +560,40 @@ components:
         value:
           $ref: "#/components/schemas/LiteralValue"
 
-#    measurement_scale:
-#      allOf:
-#        - $ref: '#/components/schemas/metadata'
-#      title: <variable>.<measurement_scale>
-#      description: >
-#        host: \<variable> <br>
-#        The measurement scale of \<variable> value.<br>
-#      required:
-#        - measurement_scale
-#      properties:
-#        metadata_type:
-#          default: "measurement_scale"
-#        measurement_scale:
-#          description: >
-#            Values: \"binary\", \"categorical\", \"continuous\"
-#          type: string
-#          enum: [ BINARY, CATEGORICAL, CONTINUOUS ]
+    #    measurement_scale:
+    #      allOf:
+    #        - $ref: '#/components/schemas/metadata'
+    #      title: <variable>.<measurement_scale>
+    #      description: >
+    #        host: \<variable> <br>
+    #        The measurement scale of \<variable> value.<br>
+    #      required:
+    #        - measurement_scale
+    #      properties:
+    #        metadata_type:
+    #          default: "measurement_scale"
+    #        measurement_scale:
+    #          description: >
+    #            Values: \"binary\", \"categorical\", \"continuous\"
+    #          type: string
+    #          enum: [ BINARY, CATEGORICAL, CONTINUOUS ]
 
-#    value_domain:
-#      allOf:
-#        - $ref: '#/components/schemas/metadata'
-#      title: <variable>.<value_domain>
-#      description: >
-#        host: \<variable> <br>
-#        Expression of the possible values data can take, as interval.<br>
-#      required:
-#        - value_domain
-#      properties:
-#        type:
-#          default: "value_domain"
-#        value_domain:
-#          description: >
-#            Example\: \"(and (> v -infty) (< v infty))\"
-#          type: string
+    #    value_domain:
+    #      allOf:
+    #        - $ref: '#/components/schemas/metadata'
+    #      title: <variable>.<value_domain>
+    #      description: >
+    #        host: \<variable> <br>
+    #        Expression of the possible values data can take, as interval.<br>
+    #      required:
+    #        - value_domain
+    #      properties:
+    #        type:
+    #          default: "value_domain"
+    #        value_domain:
+    #          description: >
+    #            Example\: \"(and (> v -infty) (< v infty))\"
+    #          type: string
 
     ### <type>
 
