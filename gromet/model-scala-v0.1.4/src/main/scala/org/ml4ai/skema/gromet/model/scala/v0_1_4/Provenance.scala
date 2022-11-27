@@ -4,18 +4,20 @@ import org.json4s.JValue
 import org.json4s.JsonDSL._
 import org.ml4ai.skema.gromet.model.scala.v0_1_4.utils.{Model, ModelBuilder}
 
+import java.time.OffsetDateTime
+
 case class Provenance(
   methodOpt: Option[String] = None,
-  timestampOpt: Option[String] = None // TODO
+  timestampOpt: Option[OffsetDateTime] = None
 ) extends Model {
   import Provenance._
 
   def method: String = methodOpt.get
-  def timestamp: String /*Date*/ = timestampOpt.get
+  def timestamp: OffsetDateTime = timestampOpt.get
 
   def toJson: JValue = {
     (METHOD -> methodOpt) ~
-    (TIMESTAMP -> timestampOpt) // .map(toJson))
+    (TIMESTAMP -> timestampOpt.map(toJson))
   }
 }
 
@@ -25,7 +27,7 @@ object Provenance extends ModelBuilder {
 
   def fromJson(jValue: JValue): Provenance = {
     val methodOpt = (jValue \ METHOD).extractOpt[String]
-    val timestampOpt = (jValue \ TIMESTAMP).extractOpt[String] // [JString].map(dateFromJson)
+    val timestampOpt = (jValue \ TIMESTAMP).extractOpt[JValue].map(offsetDateTimeFromJson)
 
     Provenance(
       methodOpt,
