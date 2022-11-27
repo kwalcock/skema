@@ -6,7 +6,7 @@ import org.ml4ai.skema.gromet.model.scala.v0_1_4.utils.{Model, ModelBuilder}
 
 case class TypedValue(
   typeOpt: Option[String] = None,
-  valueOpt: Option[JObject] = None, // TODO
+  valueOpt: Option[JValue] = None, // TODO
   indexOpt: Option[Int] = None
 ) extends Model {
   import TypedValue._
@@ -25,7 +25,7 @@ object TypedValue extends ModelBuilder {
 
   def fromJson(jValue: JValue): TypedValue = {
     val typeOpt = (jValue \ TYPE).extractOpt[String]
-    val valueOpt = (jValue \ VALUE).extractOpt[JObject]
+    val valueOpt = (jValue \ VALUE).extractOpt[JValue]
     val indexOpt = (jValue \ INDEX).extractOpt[Int]
 
     TypedValue(

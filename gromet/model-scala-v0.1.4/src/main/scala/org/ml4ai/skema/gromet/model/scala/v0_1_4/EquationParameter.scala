@@ -37,14 +37,6 @@ object EquationParameter extends MetadataModelBuilder {
   val VARIABLE_IDENTIFIER = "variable_identifier"
   val VALUE = "value"
 
-  // TODO, also add Option[String] to list
-  // It needs everything
-  // TODO: Each object also inherits from a class and has getMapping
-  // But first complete this to see if it works.
-  // Some things are ObjectSerializers, ArraySerializers, LiteralSerializers
-  // EnumeratorSerialisers as base class
-  // The case class objects get a constructor based on the result of the serializer, a map or array or whatnot
-
   def fromJson(jValue: JValue): EquationParameter = {
     val provenanceOpt = (jValue \ PROVENANCE).extractOpt[JValue].map(Provenance.fromJson)
     val metadataTypeOpt = (jValue \ METADATA_TYPE).extractOpt[String]

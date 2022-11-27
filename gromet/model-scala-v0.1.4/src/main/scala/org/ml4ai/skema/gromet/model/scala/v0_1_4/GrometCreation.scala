@@ -10,7 +10,8 @@ case class GrometCreation(
   grometVersionOpt: Option[String] = Some("0.1.2")
 ) extends MetadataModel {
   import GrometCreation._
-  // TODO: accessors
+
+  // TODO: accessors throughout
 
   def toJson: JValue = {
     (PROVENANCE -> provenanceOpt.map(_.toJson)) ~
