@@ -14,8 +14,8 @@ libraryDependencies ++= {
 }
 
 lazy val root = (project in file("."))
-  .aggregate(common, generator, /*java,*/ openapi_scala_akka_client)
-  .dependsOn(/*common % "compile -> compile; test -> test"*/)
+  .aggregate(common, generator, model_scala_v0_1_4)
+  .dependsOn(common, generator, model_scala_v0_1_4)
   .settings(
     publish / skip := true
   )
@@ -25,11 +25,5 @@ lazy val common = project
 lazy val generator = project
     .dependsOn(common % "compile -> compile; test -> test")
 
-lazy val openapi_scala_akka_client = (project in file("openapi-scala-akka-client"))
+lazy val model_scala_v0_1_4 = (project in file("model-scala-v0.1.4"))
     .dependsOn(common % "compile -> compile; test -> test")
-
-//lazy val swagger_java_client = (project in file("swagger-java-client"))
-// .dependsOn(common % "compile -> compile; test -> test")
-
-//lazy val swagger_scala_client = (project in file("swagger-scala-client"))
-//   .dependsOn(common % "compile -> compile; test -> test")
