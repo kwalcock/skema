@@ -63,9 +63,9 @@ components:
       description: Generic base class for any GroMEt object
       type: object
       properties:
-#        id:
-#          description: An integer representing an identifier that is unique within the GrometFNModule.
-#          type: integer
+        #        id:
+        #          description: An integer representing an identifier that is unique within the GrometFNModule.
+        #          type: integer
         metadata:
           description: Index (integer) into the metadata_collection table in GrometFNModule.
           type: integer
@@ -108,17 +108,17 @@ components:
         - NATIVE            # Reference to native language library (e.g., Python 3.10 argparse, sys, etc...)
         - OTHER             # Importing from some other source.
 
-# Examples of types of Imports
-#(1) LIBRARY:
-#     {"name": "numpy.concatenate",
-#      "type": "LIBRARY",
-#      "version": "Numpy 1.23.0",
-#      "uri": "https://numpy.org/"}.
-#(2) Exisitng GrometFNModule (GROMET_FN_MODULE):
-#     {"name": "model.sir.get_growth_rate: <index_to_FN_in_GrometFNModule_attributes_array>",
-#      "type": "GROMET_FN_MODULE",
-#      "version": "CHIME penn... 2020-..."
-#      "uri": "<location of GrometFNModule JSON>"}
+    # Examples of types of Imports
+    #(1) LIBRARY:
+    #     {"name": "numpy.concatenate",
+    #      "type": "LIBRARY",
+    #      "version": "Numpy 1.23.0",
+    #      "uri": "https://numpy.org/"}.
+    #(2) Exisitng GrometFNModule (GROMET_FN_MODULE):
+    #     {"name": "model.sir.get_growth_rate: <index_to_FN_in_GrometFNModule_attributes_array>",
+    #      "type": "GROMET_FN_MODULE",
+    #      "version": "CHIME penn... 2020-..."
+    #      "uri": "<location of GrometFNModule JSON>"}
 
     ImportReference:
       properties:
