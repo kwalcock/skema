@@ -1,6 +1,6 @@
 package org.ml4ai.skema.gromet.model.scala.v0_1_4.utils
 
-import org.json4s.{DefaultFormats, Formats, JObject, JString, JValue}
+import org.json4s.{DefaultFormats, Formats, JObject, JValue}
 
 import java.time.OffsetDateTime
 import java.util.UUID
@@ -46,7 +46,4 @@ abstract class ModelBuilder() {
   }
 }
 
-object ModelBuilder {
-  val METADATA_TYPE = "metadata_type"
-  val PROVENANCE = "provenance"
-}
+object ModelBuilder
