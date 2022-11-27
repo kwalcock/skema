@@ -1,10 +1,10 @@
 package org.ml4ai.skema.gromet.model.openapi.scala
 
-import org.json4s.{DefaultFormats, Formats, JArray, JField, JObject, JString }
+import org.json4s.{DefaultFormats, Formats, JArray, JField, JObject, JString}
 import org.json4s.jackson.JsonMethods
 import org.json4s.jackson.Serialization
 import org.ml4ai.skema.gromet.common.utils.FileUtils
-import org.ml4ai.skema.gromet.model.scala.GrometFN
+import org.ml4ai.skema.gromet.model.scala.{GrometFN, GrometFNModule}
 import org.ml4ai.skema.gromet.test.Test
 
 class ModelTest extends Test {
@@ -47,12 +47,12 @@ class ModelTest extends Test {
         val parsed = JsonMethods.parse(uglyPython).asInstanceOf[JObject]
         val sorted = sortObject(parsed)
         val prettyPython = Serialization.writePretty(sorted)
-        val dated = prettyPython // dateObject(sorted)
+        val dated = sorted // dateObject(sorted)
         val prettyScala = Serialization.writePretty(dated) //.camelizeKeys)
 
         (prettyPython, prettyScala)
       }
-      val deserialized = GrometFN.fromJson(JsonMethods.parse(serializedScala))
+      val deserialized = GrometFNModule.fromJson(JsonMethods.parse(serializedScala))
       val (reserializedPython, reserializedScala) = {
         val uglyScala = Serialization.writePretty(deserialized.toJson)
         val parsed = JsonMethods.parse(uglyScala).asInstanceOf[JObject]

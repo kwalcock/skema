@@ -1,6 +1,6 @@
 package org.ml4ai.skema.gromet.model.scala
 
-import org.json4s.JValue
+import org.json4s.{JObject, JValue}
 import org.json4s.JsonDSL._
 
 case class GrometBoxFunction(
@@ -33,7 +33,8 @@ object GrometBoxFunction extends ModelBuilder {
     val nameOpt = (jValue \ NAME).extractOpt[String]
     val functionTypeOpt = (jValue \ FUNCTION_TYPE).extractOpt[JValue].map(FunctionType.fromJson)
     val contentsOpt = (jValue \ CONTENTS).extractOpt[Int]
-    val valueOpt = (jValue \ VALUE).extractOpt[JValue].map(LiteralValue.fromJson)
+
+    val valueOpt = (jValue \ VALUE).extractOpt[JObject].map(LiteralValue.fromJson) // JValue might be JNothing
 
     GrometBoxFunction(
       metadataOpt,

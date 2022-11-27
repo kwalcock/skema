@@ -10,7 +10,7 @@ case class GrometFNModule(
   nameOpt: Option[String] = None,
   fnOpt: Option[GrometFN] = None,
   attributesOpt: Option[List[TypedValue]] = None,
-  metadataCollectionOpt: Option[List[List[Metadata]]] = None,
+  metadataCollectionOpt: Option[List[List[Model]]] = None, // TODO subclass of model?
 ) extends Model {
   import GrometFNModule._
 
@@ -40,6 +40,8 @@ object GrometFNModule extends ModelBuilder {
   val ATTRIBUTES = "attributes"
   val METADATA_COLLECTION = "metadata_collection"
 
+  val METADATA_TYPE = "metadata_type"
+
   def fromJson(jValue: JValue): GrometFNModule = {
     val metadataOpt = (jValue \ METADATA).extractOpt[Int]
     val schemaOpt = (jValue \ SCHEMA).extractOpt[String]
@@ -52,7 +54,22 @@ object GrometFNModule extends ModelBuilder {
     val metadataCollectionOpt = (jValue \ METADATA_COLLECTION).extractOpt[JArray].map { jArray =>
       jArray.arr.map { jValue =>
         jValue.extract[JArray].arr.map { jValue =>
-          Metadata.fromJson(jValue)
+          val metadataType = (jValue \ METADATA_TYPE).extract[String]
+
+          metadataType match {
+            case SourceCodeDataType.TYPE => SourceCodeDataType.fromJson(jValue)
+            case EquationDefinition.TYPE => EquationDefinition.fromJson(jValue)
+            case EquationParameter.TYPE => EquationParameter.fromJson(jValue)
+            case GrometCreation.TYPE => GrometCreation.fromJson(jValue)
+            case SourceCodeCollection.TYPE => SourceCodeCollection.fromJson(jValue)
+            case SourceCodeLoopInit.TYPE => SourceCodeLoopInit.fromJson(jValue)
+            case SourceCodeLoopUpdate.TYPE => SourceCodeLoopUpdate.fromJson(jValue)
+            case SourceCodeReference.TYPE => SourceCodeReference.fromJson(jValue)
+            case TextDefinition.TYPE => TextDefinition.fromJson(jValue)
+            case TextParameter.TYPE => TextParameter.fromJson(jValue)
+            case TextualDocumentCollection.TYPE => TextualDocumentCollection.fromJson(jValue)
+            case _ => ???
+          }
         }
       }
     }

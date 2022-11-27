@@ -1,5 +1,4 @@
 {
-    "gromet_object_type": "GrometFNModule",
     "schema": "FN",
     "schema_version": "0.1.4",
     "name": "cond1",
@@ -168,5 +167,6 @@
         [
             {"metadata_type":"source_code_reference","code_file_reference_uid":"7e297d8b-2aac-2de2-a46d-f55f10abd031","line_begin":6,"line_end":6,"col_begin":4,"col_end":13,"provenance":{"method":"skema_code2fn_program_analysis","timestamp":"2022-09-15 08:21:34.706814"}}
         ]
-    ]
+    ],
+    "metadata": 1
 }

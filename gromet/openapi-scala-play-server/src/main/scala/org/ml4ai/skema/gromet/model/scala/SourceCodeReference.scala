@@ -5,21 +5,22 @@ import org.json4s.JsonDSL._
 
 import java.util.UUID
 
+import SourceCodeReference._
+
 case class SourceCodeReference(
   provenanceOpt: Option[Provenance] = None, // Metadata
-  metadataTypeOpt: Option[String] = Some("source_code_reference"),
-  codeFileReferenceUidOpt: Option[UUID] = None,
+  metadataTypeOpt: Option[String] = Some(TYPE),
+  codeFileReferenceUidOpt: Option[String /*UUID*/] = None,
   lineBeginOpt: Option[Int] = None,
   lineEndOpt: Option[Int] = None,
   colBeginOpt: Option[Int] = None,
   colEndOpt: Option[Int] = None
 ) extends Model {
-  import SourceCodeReference._
 
   def toJson: JValue = {
     (PROVENANCE -> provenanceOpt.map(_.toJson)) ~
     (METADATA_TYPE -> metadataTypeOpt) ~
-    (CODE_FILE_REFERENCE_UID -> codeFileReferenceUidOpt.map(toJson)) ~
+    (CODE_FILE_REFERENCE_UID -> codeFileReferenceUidOpt) ~ // .map(toJson)) ~
     (LINE_BEGIN -> lineBeginOpt) ~
     (LINE_END -> lineEndOpt) ~
     (COL_BEGIN -> colBeginOpt) ~
@@ -28,6 +29,8 @@ case class SourceCodeReference(
 }
 
 object SourceCodeReference extends ModelBuilder {
+  val TYPE = "source_code_reference"
+
   val PROVENANCE = "provenance"
   val METADATA_TYPE = "metadata_type"
   val CODE_FILE_REFERENCE_UID = "code_file_reference_uid"
@@ -39,7 +42,7 @@ object SourceCodeReference extends ModelBuilder {
   def fromJson(jValue: JValue): SourceCodeReference = {
     val provenanceOpt = (jValue \ PROVENANCE).extractOpt[JValue].map(Provenance.fromJson)
     val metadataTypeOpt = (jValue \ METADATA_TYPE).extractOpt[String]
-    val codeFileReferenceUidOpt = (jValue \ CODE_FILE_REFERENCE_UID).extractOpt[JString].map(uuidFromJson)
+    val codeFileReferenceUidOpt = (jValue \ CODE_FILE_REFERENCE_UID).extractOpt[String] // JString].map(uuidFromJson)
     val lineBeginOpt = (jValue \ LINE_BEGIN).extractOpt[Int]
     val lineEndOpt = (jValue \ LINE_END).extractOpt[Int]
     val colBeginOpt = (jValue \ COL_BEGIN).extractOpt[Int]

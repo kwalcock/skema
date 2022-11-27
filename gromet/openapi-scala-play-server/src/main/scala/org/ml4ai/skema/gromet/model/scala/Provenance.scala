@@ -7,16 +7,16 @@ import java.util.Date
 
 case class Provenance(
   methodOpt: Option[String] = None,
-  timestampOpt: Option[Date] = None
+  timestampOpt: Option[String] = None // TODO
 ) extends Model {
   import Provenance._
 
   def method: String = methodOpt.get
-  def timestamp: Date = timestampOpt.get
+  def timestamp: String /*Date*/ = timestampOpt.get
 
   def toJson: JValue = {
     (METHOD -> methodOpt) ~
-    (TIMESTAMP -> timestampOpt.map(toJson))
+    (TIMESTAMP -> timestampOpt) // .map(toJson))
   }
 }
 
@@ -26,7 +26,7 @@ object Provenance extends ModelBuilder {
 
   def fromJson(jValue: JValue): Provenance = {
     val methodOpt = (jValue \ METHOD).extractOpt[String]
-    val timestampOpt = (jValue \ TIMESTAMP).extractOpt[JString].map(dateFromJson)
+    val timestampOpt = (jValue \ TIMESTAMP).extractOpt[String] // [JString].map(dateFromJson)
 
     Provenance(
       methodOpt,

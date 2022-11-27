@@ -3,12 +3,13 @@ package org.ml4ai.skema.gromet.model.scala
 import org.json4s.JValue
 import org.json4s.JsonDSL._
 
+import GrometCreation._
+
 case class GrometCreation(
   provenanceOpt: Option[Provenance] = None, // Metadata
-  metadataTypeOpt: Option[String] = Some("promet_creation"),
+  metadataTypeOpt: Option[String] = Some(TYPE),
   grometVersionOpt: Option[String] = Some("0.1.2")
 ) extends Model {
-  import GrometCreation._
 
   // TODO: accessors
 
@@ -20,6 +21,8 @@ case class GrometCreation(
 }
 
 object GrometCreation extends ModelBuilder {
+  val TYPE = "gromet_creation"
+
   val PROVENANCE = "provenance"
   val METADATA_TYPE = "metadata_type"
   val GROMET_VERSION = "gromet_version"
