@@ -2,13 +2,14 @@ package org.ml4ai.skema.gromet.model.scala.v0_1_4
 
 import org.json4s.JsonDSL._
 import org.json4s.{JArray, JValue}
-import org.ml4ai.skema.gromet.model.scala.v0_1_4.TextualDocumentCollection._
+import org.ml4ai.skema.gromet.model.scala.v0_1_4.utils.{MetadataModel, MetadataModelBuilder}
 
 case class TextualDocumentCollection(
   provenanceOpt: Option[Provenance] = None, // Metadata
-  metadataTypeOpt: Option[String] = Some(TYPE),
+  metadataTypeOpt: Option[String] = Some(TextualDocumentCollection.TYPE),
   documentsOpt: Option[List[TextualDocumentReference]] = None
-) extends Model {
+) extends MetadataModel {
+  import TextualDocumentCollection._
 
   def toJson: JValue = {
     (PROVENANCE -> provenanceOpt.map(_.toJson)) ~
@@ -19,7 +20,7 @@ case class TextualDocumentCollection(
   }
 }
 
-object TextualDocumentCollection extends ModelBuilder {
+object TextualDocumentCollection extends MetadataModelBuilder {
   val TYPE = "textual_document_collection"
 
   val PROVENANCE = "provenance"

@@ -2,15 +2,16 @@ package org.ml4ai.skema.gromet.model.scala.v0_1_4
 
 import org.json4s.JValue
 import org.json4s.JsonDSL._
-import org.ml4ai.skema.gromet.model.scala.v0_1_4.TextDefinition._
+import org.ml4ai.skema.gromet.model.scala.v0_1_4.utils.{MetadataModel, MetadataModelBuilder}
 
 case class TextDefinition(
   provenanceOpt: Option[Provenance] = None, // Metadata
-  metadataTypeOpt: Option[String] = Some(TYPE),
+  metadataTypeOpt: Option[String] = Some(TextDefinition.TYPE),
   textExtractionOpt: Option[TextExtraction] = None,
   variableIdentifierOpt: Option[String] = None,
   variableDefinitionOpt: Option[String] = None
-) extends Model {
+) extends MetadataModel {
+  import TextDefinition._
 
   def toJson: JValue = {
     (PROVENANCE -> provenanceOpt.map(_.toJson)) ~
@@ -21,7 +22,7 @@ case class TextDefinition(
   }
 }
 
-object TextDefinition extends ModelBuilder {
+object TextDefinition extends MetadataModelBuilder {
   val TYPE = "text_definition"
 
   val PROVENANCE = "provenance"

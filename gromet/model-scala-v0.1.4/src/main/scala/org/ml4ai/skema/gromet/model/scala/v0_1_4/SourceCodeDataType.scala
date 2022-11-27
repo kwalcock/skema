@@ -2,15 +2,16 @@ package org.ml4ai.skema.gromet.model.scala.v0_1_4
 
 import org.json4s.JValue
 import org.json4s.JsonDSL._
-import org.ml4ai.skema.gromet.model.scala.v0_1_4.SourceCodeDataType._
+import org.ml4ai.skema.gromet.model.scala.v0_1_4.utils.{MetadataModel, MetadataModelBuilder}
 
 case class SourceCodeDataType(
   provenanceOpt: Option[Provenance] = None, // Metadata
-  metadataTypeOpt: Option[String] = Some(TYPE),
+  metadataTypeOpt: Option[String] = Some(SourceCodeDataType.TYPE),
   sourceLanguageOpt: Option[String] = None,
   sourceLanguageVersionOpt: Option[String] = None,
   dataTypeOpt: Option[String] = None,
-) extends Model {
+) extends MetadataModel {
+  import SourceCodeDataType._
 
   def toJson: JValue = {
     (PROVENANCE -> provenanceOpt.map(_.toJson)) ~
@@ -21,7 +22,7 @@ case class SourceCodeDataType(
   }
 }
 
-object SourceCodeDataType extends ModelBuilder {
+object SourceCodeDataType extends MetadataModelBuilder {
   val TYPE = "source_code_data_type"
 
   val PROVENANCE = "provenance"

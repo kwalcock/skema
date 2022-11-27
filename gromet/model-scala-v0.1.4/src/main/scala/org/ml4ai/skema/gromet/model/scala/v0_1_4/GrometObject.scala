@@ -2,6 +2,7 @@ package org.ml4ai.skema.gromet.model.scala.v0_1_4
 
 import org.json4s.JValue
 import org.json4s.JsonDSL._
+import org.ml4ai.skema.gromet.model.scala.v0_1_4.utils.{Model, ModelBuilder}
 
 case class GrometObject(
   metadataOpt: Option[Int] = None

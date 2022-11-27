@@ -2,14 +2,14 @@ package org.ml4ai.skema.gromet.model.scala.v0_1_4
 
 import org.json4s.JValue
 import org.json4s.JsonDSL._
-import org.ml4ai.skema.gromet.model.scala.v0_1_4.GrometCreation._
+import org.ml4ai.skema.gromet.model.scala.v0_1_4.utils.{MetadataModel, MetadataModelBuilder}
 
 case class GrometCreation(
   provenanceOpt: Option[Provenance] = None, // Metadata
-  metadataTypeOpt: Option[String] = Some(TYPE),
+  metadataTypeOpt: Option[String] = Some(GrometCreation.TYPE),
   grometVersionOpt: Option[String] = Some("0.1.2")
-) extends Model {
-
+) extends MetadataModel {
+  import GrometCreation._
   // TODO: accessors
 
   def toJson: JValue = {
@@ -19,7 +19,7 @@ case class GrometCreation(
   }
 }
 
-object GrometCreation extends ModelBuilder {
+object GrometCreation extends MetadataModelBuilder {
   val TYPE = "gromet_creation"
 
   val PROVENANCE = "provenance"

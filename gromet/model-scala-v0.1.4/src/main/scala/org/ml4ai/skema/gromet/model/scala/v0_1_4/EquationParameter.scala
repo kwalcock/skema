@@ -2,15 +2,16 @@ package org.ml4ai.skema.gromet.model.scala.v0_1_4
 
 import org.json4s.JValue
 import org.json4s.JsonDSL._
-import org.ml4ai.skema.gromet.model.scala.v0_1_4.EquationParameter._
+import org.ml4ai.skema.gromet.model.scala.v0_1_4.utils.{MetadataModel, MetadataModelBuilder}
 
 case class EquationParameter(
   provenanceOpt: Option[Provenance] = None, // Metadata
-  metadataTypeOpt: Option[String] = Some(TYPE),
+  metadataTypeOpt: Option[String] = Some(EquationParameter.TYPE),
   equationExtractionOpt: Option[EquationExtraction] = None,
   variableIdentifierOpt: Option[String] = None,
   valueOpt: Option[LiteralValue] = None,
-) extends Model {
+) extends MetadataModel {
+  import EquationParameter._
 
   def provenance: Provenance = provenanceOpt.get
   def metadataType: String = metadataTypeOpt.get
@@ -27,7 +28,7 @@ case class EquationParameter(
   }
 }
 
-object EquationParameter extends ModelBuilder {
+object EquationParameter extends MetadataModelBuilder {
   val TYPE = "equation_parameter"
 
   val PROVENANCE = "provenance"

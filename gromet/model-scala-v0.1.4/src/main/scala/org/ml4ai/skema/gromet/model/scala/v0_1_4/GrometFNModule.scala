@@ -2,6 +2,7 @@ package org.ml4ai.skema.gromet.model.scala.v0_1_4
 
 import org.json4s.JsonDSL._
 import org.json4s.{JArray, JValue}
+import org.ml4ai.skema.gromet.model.scala.v0_1_4.utils.{MetadataModel, Model, ModelBuilder}
 
 case class GrometFNModule(
   metadataOpt: Option[Int] = None, // GrometObject
@@ -10,7 +11,7 @@ case class GrometFNModule(
   nameOpt: Option[String] = None,
   fnOpt: Option[GrometFN] = None,
   attributesOpt: Option[List[TypedValue]] = None,
-  metadataCollectionOpt: Option[List[List[Model]]] = None, // TODO subclass of model?
+  metadataCollectionOpt: Option[List[List[MetadataModel]]] = None,
 ) extends Model {
   import GrometFNModule._
 

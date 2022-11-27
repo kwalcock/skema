@@ -1,4 +1,4 @@
-package org.ml4ai.skema.gromet.model.scala.v0_1_4
+package org.ml4ai.skema.gromet.model.scala.v0_1_4.utils
 
 import org.json4s.{JString, JValue}
 
