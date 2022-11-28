@@ -1,7 +1,7 @@
 package org.ml4ai.skema.gromet.model.scala.v0_1_4
 
 import org.json4s.jackson.{JsonMethods, Serialization}
-import org.json4s.{DefaultFormats, Formats, JField, JObject, JString}
+import org.json4s.{DefaultFormats, Formats, JObject}
 import org.ml4ai.skema.gromet.common.utils.FileUtils
 import org.ml4ai.skema.gromet.test.Test
 
@@ -17,56 +17,30 @@ class ModelTest extends Test {
     sorted.asInstanceOf[JObject]
   }
 
-  def dateObject(jObject: JObject): JObject = {
-    val dated = jObject.transformField {
-      case JField(key, JString(value)) if key == "timestamp" =>
-        JField(key, JString(value.replace(" ", "T")))
-    }
-
-    dated.asInstanceOf[JObject]
-  }
-
-  def undateObject(jObject: JObject): JObject = {
-    val undated = jObject.transformField {
-      case JField(key, JString(value)) if key == "timestamp" =>
-        JField(key, JString(value.replace("T", " ")))
-    }
-
-    undated.asInstanceOf[JObject]
-  }
-
   def run(name: String): Unit = {
     implicit val formats: Formats = DefaultFormats
 
     it should s"deserialize $name" in {
       val resourceName =  s"/examples/$name/FN_0.1.4/$name--Gromet-FN-auto.json"
-      val (serializedPython, serializedScala) = {
-        val uglyPython = FileUtils.textFromResource(resourceName)
-        val parsed = JsonMethods.parse(uglyPython).asInstanceOf[JObject]
+      val serialized = {
+        val ugly = FileUtils.textFromResource(resourceName)
+        val parsed = JsonMethods.parse(ugly).asInstanceOf[JObject]
         val sorted = sortObject(parsed)
-        val prettyPython = Serialization.writePretty(sorted)
-        val dated = sorted // dateObject(sorted)
-        val prettyScala = Serialization.writePretty(dated) //.camelizeKeys)
+        val pretty = Serialization.writePretty(sorted)
 
-        (prettyPython, prettyScala)
+        pretty
       }
-      val deserialized = GrometFNModule.fromJson(JsonMethods.parse(serializedScala))
-      val (reserializedPython, reserializedScala) = {
+      val deserialized = GrometFNModule.fromJson(JsonMethods.parse(serialized))
+      val reserialized = {
         val uglyScala = Serialization.writePretty(deserialized.toJson)
         val parsed = JsonMethods.parse(uglyScala).asInstanceOf[JObject]
         val sorted = sortObject(parsed)
-        val prettyScala = Serialization.writePretty(sorted)
-        val undated = sorted // undateObject(sorted)
-        val prettyPython = Serialization.writePretty(undated.snakizeKeys)
+        val pretty = Serialization.writePretty(sorted)
 
-        (prettyPython, prettyScala)
+        pretty
       }
-      println(serializedPython)
-      println(serializedScala)
-      println(reserializedScala)
-      println(reserializedPython)
-      reserializedScala should be (serializedScala)
-      reserializedPython should be (serializedPython)
+
+      reserialized should be (serialized)
     }
   }
 
