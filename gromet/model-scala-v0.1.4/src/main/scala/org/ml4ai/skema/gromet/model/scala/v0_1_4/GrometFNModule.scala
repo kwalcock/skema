@@ -15,6 +15,14 @@ case class GrometFNModule(
 ) extends Model {
   import GrometFNModule._
 
+  def metadata: Int = metadataOpt.get
+  def schema: String = schemaOpt.get
+  def schemaVersion: String = schemaVersionOpt.get
+  def name: String = nameOpt.get
+  def fn: GrometFN = fnOpt.get
+  def attributes: List[TypedValue] = attributesOpt.get
+  def metadataCollection: List[List[MetadataModel]] = metadataCollectionOpt.get
+
   def toJson: JValue = {
     (METADATA -> metadataOpt) ~
     (SCHEMA -> schemaOpt) ~

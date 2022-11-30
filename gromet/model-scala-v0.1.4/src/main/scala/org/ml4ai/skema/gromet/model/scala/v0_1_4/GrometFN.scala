@@ -41,6 +41,42 @@ case class GrometFN(
   wcCargsOpt: Option[List[GrometWire]] = None
 ) extends Model {
   import GrometFN._
+
+  def metadata: Int = metadataOpt.get
+  def name: String= nameOpt.get
+  def b: List[GrometBoxFunction] = bOpt.get
+  def opi: List[GrometPort] = opiOpt.get
+  def opo: List[GrometPort] = opoOpt.get
+  def wopio: List[GrometWire] = wopioOpt.get
+  def bf: List[GrometBoxFunction] = bfOpt.get
+  def pif: List[GrometPort] = pifOpt.get
+  def pof: List[GrometPort] = pofOpt.get
+  def wfopi: List[GrometWire] = wfopiOpt.get
+  def wfl: List[GrometWire] = wflOpt.get
+  def wff: List[GrometWire] = wffOpt.get
+  def wfc: List[GrometWire] = wfcOpt.get
+  def wfopo: List[GrometWire] = wfopoOpt.get
+  def bl: List[GrometBoxLoop] = blOpt.get
+  def pil: List[GrometPort] = pilOpt.get
+  def pol: List[GrometPort] = polOpt.get
+  def wlopi: List[GrometWire] = wlopiOpt.get
+  def wll: List[GrometWire] = wllOpt.get
+  def wlf: List[GrometWire] = wlfOpt.get
+  def wlc: List[GrometWire] = wlcOpt.get
+  def wlopo: List[GrometWire] = wlopoOpt.get
+  def wlIiargs: List[GrometWire] = wlIiargsOpt.get
+  def wlIoargs: List[GrometWire] = wlIoargsOpt.get
+  def wlCargs: List[GrometWire] = wlCargsOpt.get
+  def bc: List[GrometBoxConditional] = bcOpt.get
+  def pic: List[GrometPort] = picOpt.get
+  def poc: List[GrometPort] = pocOpt.get
+  def wcopi: List[GrometWire] = wcopiOpt.get
+  def wcl: List[GrometWire] = wclOpt.get
+  def wcf: List[GrometWire] = wcfOpt.get
+  def wcc: List[GrometWire] = wccOpt.get
+  def wcopo: List[GrometWire] = wcopoOpt.get
+  def wcCargs: List[GrometWire] = wcCargsOpt.get
+
   def toJson: JValue = {
     (METADATA -> metadataOpt) ~
     (NAME -> nameOpt) ~

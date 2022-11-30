@@ -15,6 +15,13 @@ case class TextualDocumentReference(
 ) extends Model {
   import TextualDocumentReference._
 
+  def uid: String = uidOpt.get
+  def globalReferenceId: String = globalReferenceIdOpt.get
+  def cosmostId: String = cosmosIdOpt.get
+  def cosmosVersionNumber: String = cosmosVersionNumberOpt.get
+  def skemaId: String = skemaIdOpt.get
+  def skemaVersionNumber: String = skemaVersionNumberOpt.get
+
   def toJson: JValue = {
     (UID -> uidOpt) ~
     (GLOBAL_REFERENCE_ID -> globalReferenceIdOpt) ~

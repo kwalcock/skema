@@ -11,7 +11,9 @@ case class GrometCreation(
 ) extends MetadataModel {
   import GrometCreation._
 
-  // TODO: accessors throughout
+  def provenance: Provenance = provenanceOpt.get
+  def metadataType: String = metadataTypeOpt.get
+  def grometVersion: String = grometVersionOpt.get
 
   def toJson: JValue = {
     (PROVENANCE -> provenanceOpt.map(_.toJson)) ~

@@ -9,6 +9,8 @@ case class Metadata(
 ) extends Model {
   import Metadata._
 
+  def provenance: Provenance = provenanceOpt.get
+
   def toJson: JValue = {
     (PROVENANCE -> provenanceOpt.map(_.toJson))
   }

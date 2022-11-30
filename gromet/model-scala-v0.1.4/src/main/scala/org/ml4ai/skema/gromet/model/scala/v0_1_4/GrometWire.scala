@@ -12,6 +12,11 @@ case class GrometWire(
 ) extends Model {
   import GrometWire._
 
+  def metadata: Int = metadataOpt.get
+  def name: String = nameOpt.get
+  def src: Int = srcOpt.get
+  def tgt: Int = tgtOpt.get
+
   def toJson: JValue = {
     (METADATA -> metadataOpt) ~
     (NAME -> nameOpt) ~

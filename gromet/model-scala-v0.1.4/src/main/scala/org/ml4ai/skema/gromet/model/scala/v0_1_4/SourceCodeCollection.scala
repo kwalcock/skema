@@ -13,6 +13,12 @@ case class SourceCodeCollection(
 ) extends MetadataModel {
   import SourceCodeCollection._
 
+  def provenance: Provenance = provenanceOpt.get
+  def metadataType: String = metadataTypeOpt.get
+  def name: String = nameOpt.get
+  def globalReferenceId: String = globalReferenceIdOpt.get
+  def files: List[CodeFileReference] = filesOpt.get
+
   def toJson: JValue = {
     (PROVENANCE -> provenanceOpt.map(_.toJson)) ~
     (METADATA_TYPE -> metadataTypeOpt) ~

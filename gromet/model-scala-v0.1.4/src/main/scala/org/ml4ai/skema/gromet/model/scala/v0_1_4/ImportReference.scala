@@ -13,6 +13,12 @@ case class ImportReference(
 ) extends Model {
   import ImportReference._
 
+  def name: String = nameOpt.get
+  def srcLanguage: String = srcLanguageOpt.get
+  def `type`: ImportType = typeOpt.get
+  def version: String = versionOpt.get
+  def uri: TypedValue = uriOpt.get
+
   def toJson: JValue = {
     (NAME -> nameOpt) ~
     (SRC_LANGUAGE -> srcLanguageOpt) ~

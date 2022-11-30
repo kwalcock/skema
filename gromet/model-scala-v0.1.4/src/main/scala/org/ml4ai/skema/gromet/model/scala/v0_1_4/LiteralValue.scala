@@ -10,6 +10,9 @@ case class LiteralValue(
 ) extends Model {
   import LiteralValue._
 
+  def valueType: String = valueTypeOpt.get
+  def value: JValue = valueOpt.get
+
   def toJson: JValue = {
     (VALUE_TYPE -> valueTypeOpt) ~
     (VALUE -> valueOpt)
