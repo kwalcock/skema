@@ -13,6 +13,12 @@ case class TextExtraction(
 ) extends Model {
   import TextExtraction._
 
+  def documentReferenceUid: String = documentReferenceUidOpt.get
+  def page: Int = pageOpt.get
+  def block: Int = blockOpt.get
+  def charBegin: Int = charBeginOpt.get
+  def charEnd: Int = charEndOpt.get
+
   def toJson: JValue = {
     (DOCUMENT_REFERENCE_UID -> documentReferenceUidOpt) ~
     (PAGE -> pageOpt) ~

@@ -11,6 +11,10 @@ case class TypedValue(
 ) extends Model {
   import TypedValue._
 
+  def `type`: String =  typeOpt.get
+  def value: JValue = valueOpt.get
+  def index: Int = indexOpt.get
+
   def toJson: JValue = {
     (TYPE -> typeOpt) ~
     (VALUE -> valueOpt) ~

@@ -12,6 +12,10 @@ case class GrometPort(
 ) extends Model {
   import GrometPort._
 
+  def metadata: Int = metadataOpt.get
+  def id: Int = idOpt.get
+  def box: Int = boxOpt.get
+
   def toJson: JValue = {
     (METADATA -> metadataOpt) ~
     (ID -> idOpt) ~

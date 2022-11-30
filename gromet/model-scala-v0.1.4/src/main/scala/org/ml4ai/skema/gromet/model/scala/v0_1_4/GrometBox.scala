@@ -10,8 +10,8 @@ case class GrometBox(
 ) extends Model {
   import GrometBox._
 
-  def name: String = nameOpt.get
   def metadata: Int = metadataOpt.get
+  def name: String = nameOpt.get
 
   def toJson: JValue = {
     (NAME -> nameOpt) ~

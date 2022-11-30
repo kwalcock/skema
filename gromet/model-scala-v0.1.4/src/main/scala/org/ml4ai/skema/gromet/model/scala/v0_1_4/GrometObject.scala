@@ -9,6 +9,8 @@ case class GrometObject(
 ) extends Model {
   import GrometObject._
 
+  def metadata: Int = metadataOpt.get
+
   def toJson: JValue = {
     (METADATA -> metadataOpt)
   }

@@ -13,6 +13,12 @@ case class SourceCodeDataType(
 ) extends MetadataModel {
   import SourceCodeDataType._
 
+  def provenance: Provenance = provenanceOpt.get
+  def metadataType: String = metadataTypeOpt.get
+  def sourceLanguage: String = sourceLanguageOpt.get
+  def sourceLanguageVersion: String = sourceLanguageVersionOpt.get
+  def dataType: String = dataTypeOpt.get
+
   def toJson: JValue = {
     (PROVENANCE -> provenanceOpt.map(_.toJson)) ~
     (METADATA_TYPE -> metadataTypeOpt) ~

@@ -17,6 +17,14 @@ case class SourceCodeReference(
 ) extends MetadataModel {
   import SourceCodeReference._
 
+  def provenance: Provenance = provenanceOpt.get
+  def metadataType: String = metadataTypeOpt.get
+  def codeFileReferenceUid: UUID = codeFileReferenceUidOpt.get
+  def lineBegin: Int = lineBeginOpt.get
+  def lineEnd: Int = lineEndOpt.get
+  def colBegin: Int = colBeginOpt.get
+  def colEnd: Int = colEndOpt.get
+
   def toJson: JValue = {
     (PROVENANCE -> provenanceOpt.map(_.toJson)) ~
     (METADATA_TYPE -> metadataTypeOpt) ~

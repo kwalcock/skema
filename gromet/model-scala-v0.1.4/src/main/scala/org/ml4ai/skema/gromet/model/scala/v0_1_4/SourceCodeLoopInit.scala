@@ -13,6 +13,12 @@ case class SourceCodeLoopInit(
 ) extends MetadataModel {
   import SourceCodeLoopInit._
 
+  def provenance: Provenance = provenanceOpt.get
+  def metadataType: String = metadataTypeOpt.get
+  def sourceLanguage: String = sourceLanguageOpt.get
+  def sourceLanguageVersion: String = sourceLanguageVersionOpt.get
+  def loopName: String = loopNameOpt.get
+
   def toJson: JValue = {
     (PROVENANCE -> provenanceOpt.map(_.toJson)) ~
     (METADATA_TYPE -> metadataTypeOpt) ~

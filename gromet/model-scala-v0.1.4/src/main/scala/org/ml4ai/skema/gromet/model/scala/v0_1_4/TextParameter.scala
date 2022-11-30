@@ -13,6 +13,12 @@ case class TextParameter(
 ) extends MetadataModel {
   import TextParameter._
 
+  def provenance: Provenance = provenanceOpt.get
+  def metadataType: String = metadataTypeOpt.get
+  def textExtraction: TextExtraction = textExtractionOpt.get
+  def variableIdentifier: String = variableIdentifierOpt.get
+  def value: LiteralValue = valueOpt.get
+
   def toJson: JValue = {
     (PROVENANCE -> provenanceOpt.map(_.toJson))
     (METADATA_TYPE -> metadataTypeOpt) ~

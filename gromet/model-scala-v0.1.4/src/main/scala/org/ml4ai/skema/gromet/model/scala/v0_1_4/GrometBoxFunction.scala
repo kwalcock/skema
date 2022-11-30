@@ -13,6 +13,12 @@ case class GrometBoxFunction(
 ) extends Model {
   import GrometBoxFunction._
 
+  def metadata: Int =  metadataOpt.get
+  def name: String = nameOpt.get
+  def functionType: FunctionType = functionTypeOpt.get
+  def contents: Int = contentsOpt.get
+  def value: LiteralValue = valueOpt.get
+
   def toJson: JValue = {
     (METADATA -> metadataOpt) ~
     (NAME -> nameOpt) ~

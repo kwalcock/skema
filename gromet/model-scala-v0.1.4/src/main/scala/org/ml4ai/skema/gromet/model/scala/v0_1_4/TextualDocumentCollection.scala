@@ -11,6 +11,10 @@ case class TextualDocumentCollection(
 ) extends MetadataModel {
   import TextualDocumentCollection._
 
+  def provenance: Provenance = provenanceOpt.get
+  def metadataType: String = metadataTypeOpt.get
+  def documents: List[TextualDocumentReference] = documentsOpt.get
+
   def toJson: JValue = {
     (PROVENANCE -> provenanceOpt.map(_.toJson)) ~
     (METADATA_TYPE -> metadataTypeOpt) ~
