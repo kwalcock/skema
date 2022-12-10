@@ -17,11 +17,10 @@ class ModelTest extends Test {
     sorted.asInstanceOf[JObject]
   }
 
-  def run(name: String): Unit = {
+  def run(name: String, resourceName: String): Unit = {
     implicit val formats: Formats = DefaultFormats
 
     it should s"deserialize $name" in {
-      val resourceName =  s"/examples/$name/FN_0.1.4/$name--Gromet-FN-auto.json"
       val serialized = {
         val ugly = FileUtils.textFromResource(resourceName)
         val parsed = JsonMethods.parse(ugly).asInstanceOf[JObject]
@@ -44,7 +43,7 @@ class ModelTest extends Test {
     }
   }
 
-  val tests = Array(
+  val exampleTests = Array(
     "cond1",
     "dict1",
     "exp0",
@@ -59,8 +58,16 @@ class ModelTest extends Test {
     "while2",
     "while3"
   )
+  val demoTests = Array(
+    "CHIME_SIR_core",
+    "CHIME_SIR_while_loop_section",
+    "CHIME_SVIIvR_core"
+  )
 
-  tests.foreach {test =>
-    run(test)
+//  exampleTests.foreach { name =>
+//    run(name, s"/examples/$name/FN_0.1.4/$name--Gromet-FN-auto.json")
+//  }
+  demoTests.foreach { name =>
+    run(name, s"/demos/$name--Gromet-FN-auto.json")
   }
 }
